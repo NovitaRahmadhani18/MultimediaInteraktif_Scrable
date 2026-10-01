@@ -513,7 +513,8 @@ function initAuthSystem() {
   
   // Prepopulate sample student recap data if empty
   if (!localStorage.getItem('teacher_student_records')) {
-    generateSampleStudentData(false);
+    // Silently initialize empty array if first time
+    localStorage.setItem('teacher_student_records', JSON.stringify([]));
   }
 }
 
