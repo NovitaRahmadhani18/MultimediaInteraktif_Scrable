@@ -1,0 +1,1508 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Descriptive Scrabble Adventure - Bahasa Inggris Kelas 7 SMP</title>
+  <meta name="description"
+    content="Website Pembelajaran Interaktif Scrabble Bahasa Inggris Materi Descriptive Text untuk Siswa SMP Kelas 7 - Project Tataa">
+
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="css/style.css?v=9">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔤</text></svg>">
+</head>
+
+<body>
+
+  <!-- =========================================================================
+       NAVIGATION BAR
+       ========================================================================= -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#beranda" class="nav-brand" data-view-target="beranda" title="Descriptive Scrabble Adventure">
+        <div class="brand-logo-tile">
+          <span class="logo-letter">D</span>
+          <span class="logo-score">2</span>
+        </div>
+        <div class="brand-info">
+          <div class="brand-header-line">
+            <span class="brand-title">DESCRIPTIVE<span class="highlight">SCRABBLE</span></span>
+          </div>
+          <span class="brand-desc">Interactive English Multimedia</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="nav-menu-links">
+          <li class="nav-item">
+            <a href="#beranda" data-view-target="beranda" class="active-nav">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+              <span>Beranda</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#materi" data-view-target="materi">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+                <path d="M8 7h8" />
+                <path d="M8 11h8" />
+                <path d="M8 15h5" />
+              </svg>
+              <span>Materi</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#produk" data-view-target="produk">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect width="20" height="12" x="2" y="6" rx="6" />
+                <path d="M6 12h4" />
+                <path d="M8 10v4" />
+                <circle cx="14.5" cy="12" r="1" />
+                <circle cx="17.5" cy="12" r="1" />
+              </svg>
+              <span>Game</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#video" data-view-target="video">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect width="14" height="14" x="2" y="5" rx="3" />
+                <path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.934a.5.5 0 0 0-.777-.416L16 11" />
+              </svg>
+              <span>Video Materi</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#penilaian" data-view-target="penilaian">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" />
+                <rect width="8" height="4" x="8" y="2" rx="1" />
+                <path d="m9 14 2 2 4-4" />
+              </svg>
+              <span>Kuis</span>
+            </a>
+          </li>
+          <li class="nav-item" id="nav-guru-item">
+            <a href="#guru" data-view-target="guru">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+                <path d="M12 6v6" />
+                <path d="M9 9h6" />
+              </svg>
+              <span>Rekap Nilai</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- User Session Login Indicator -->
+        <div id="nav-user-session-wrapper" class="nav-session-container">
+          <button id="btn-user-session" class="btn-session" onclick="openAuthModal()" title="Masuk Siswa / Guru">
+            <svg class="session-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span id="session-display-name">Masuk</span>
+          </button>
+        </div>
+
+        <button id="btn-toggle-theme" class="btn-toggle-theme" title="Ubah Tema (Light / Dark)" aria-label="Ubah Tema">
+          <svg class="theme-svg theme-sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+          <svg class="theme-svg theme-moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+            <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+          </svg>
+          <span class="theme-label">Theme</span>
+        </button>
+        <div class="sound-dropdown-wrapper">
+          <button id="btn-toggle-sound-menu" class="btn-toggle-sound active" title="Pengaturan Suara" aria-label="Pengaturan Suara">
+            <svg class="sound-svg sound-on-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+            <span class="sound-label">Sound</span>
+          </button>
+          
+          <div id="sound-dropdown-panel" class="sound-dropdown-panel hidden">
+            <div class="sound-dropdown-header">
+              <h4>Pengaturan Audio</h4>
+            </div>
+            
+            <div class="sound-control-group">
+              <div class="sound-control-header">
+                <label for="toggle-sfx">Efek Suara (SFX)</label>
+                <label class="switch">
+                  <input type="checkbox" id="toggle-sfx" checked>
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <input type="range" id="volume-sfx" min="0" max="1" step="0.1" value="1">
+            </div>
+
+            <div class="sound-control-group">
+              <div class="sound-control-header">
+                <label for="toggle-bgm">Musik Latar (BGM)</label>
+                <label class="switch">
+                  <input type="checkbox" id="toggle-bgm">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <input type="range" id="volume-bgm" min="0" max="1" step="0.1" value="0.2">
+            </div>
+          </div>
+        </div>
+        <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Menu">
+          <svg class="menu-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" x2="20" y1="7" y2="7"></line>
+            <line x1="4" x2="20" y1="12" y2="12"></line>
+            <line x1="4" x2="20" y1="17" y2="17"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN CONTENT CONTAINER
+       ========================================================================= -->
+  <main class="main-wrapper">
+
+    <!-- =======================================================================
+         VIEW 1: BERANDA (HOME)
+         ======================================================================= -->
+    <section id="view-beranda" class="app-view">
+      <!-- Hero Section -->
+      <div class="hero-grid">
+        <div class="hero-content">
+          <span class="section-subtitle-tag">🌟 Media Pembelajaran Interaktif Bahasa Inggris</span>
+          <h1>Mastering <span class="gradient-text">Descriptive Text</span> Through Scrabble Adventure</h1>
+          <p class="hero-lead">
+            Belajar mengenali, mengeja, dan menyusun kosakata deskriptif bahasa Inggris kelas 7 SMP dengan modul teks
+            lengkap, video penjelasan terarah, dan gamifikasi Scrabble yang seru!
+          </p>
+          <div class="hero-cta-group">
+            <button class="btn btn-primary" onclick="navigateToView('materi')">
+              📖 Pelajari Materi Teks
+            </button>
+            <button class="btn btn-accent" onclick="navigateToView('produk')">
+              🎮 Mainkan Game Scrabble
+            </button>
+            <button class="btn btn-secondary" onclick="navigateToView('video')">
+              🎥 Tonton Video Penjelasan
+            </button>
+            <button class="btn btn-outline" onclick="navigateToView('penilaian')">
+              📝 Kuis Penilaian
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-interactive-card">
+          <div class="card-top">
+            <span class="badge badge-primary">Preview Game</span>
+            <span class="badge badge-accent">14 Points</span>
+          </div>
+          <p style="color: #cbd5e1; font-size: 0.9rem; margin-top: 0.5rem;">
+            Contoh susunan kata sifat (Adjective) mendeskripsikan kepribadian:
+          </p>
+          <div class="scrabble-demo-tiles">
+            <div class="scrabble-tile animate-pop"><span class="tile-letter">K</span><span class="tile-score">5</span>
+            </div>
+            <div class="scrabble-tile animate-pop"><span class="tile-letter">I</span><span class="tile-score">1</span>
+            </div>
+            <div class="scrabble-tile animate-pop"><span class="tile-letter">N</span><span class="tile-score">1</span>
+            </div>
+            <div class="scrabble-tile animate-pop"><span class="tile-letter">D</span><span class="tile-score">2</span>
+            </div>
+          </div>
+          <div class="hero-card-meta">
+            <button class="btn-icon"
+              onclick="window.soundEngine.speak('KIND. My English teacher is kind and friendly.')">
+              🔊 Pronounce: "KIND"
+            </button>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #94a3b8;">
+              <em>"Having or showing a friendly, generous, and considerate nature."</em>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Learning Pillars -->
+      <div class="section-header-banner">
+        <span class="section-subtitle-tag">🎯 Capaian Pembelajaran Kurikulum Merdeka</span>
+        <h2 class="section-title">Konsep Pokok Descriptive Text Kelas 7</h2>
+        <p class="section-description">
+          Memahami teks deskriptif lisan dan tulis untuk menggambarkan karakteristik orang, hewan peliharaan, tempat
+          wisata, dan benda di sekitar kita.
+        </p>
+      </div>
+
+      <div class="learning-pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">👤</div>
+          <h3>Describing People</h3>
+          <p>Mendeskripsikan ciri fisik (tall, slim, young) dan sifat kepribadian (kind, brave, smart, polite) orang
+            terdekat atau tokoh inspiratif.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🐾</div>
+          <h3>Describing Animals</h3>
+          <p>Menggambarkan hewan peliharaan dan satwa liar, mulai dari bulu (furry), cakar (sharp claws), paruh (beak),
+            hingga watak jinak (tame) atau buas (fierce).</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🏛️</div>
+          <h3>Describing Places</h3>
+          <p>Mengekspresikan suasana tempat (cozy, quiet, crowded), kebersihan (clean, tidy), serta nilai sejarah
+            (historic, ancient).</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">📦</div>
+          <h3>Describing Things</h3>
+          <p>Mengenali bentuk (round), tekstur (smooth, rough), berat (heavy, light), dan kilau (shiny) dari benda-benda
+            di sekitar kita.</p>
+        </div>
+      </div>
+
+      <!-- Interactive Vocabulary Explorer -->
+      <div class="vocab-explorer-section">
+        <div class="section-header-banner">
+          <span class="section-subtitle-tag">📚 Kamus Kosakata Audio</span>
+          <h2 class="section-title">Eksplorasi Kosakata Descriptive & Poin Scrabble</h2>
+          <p class="section-description">
+            Klik tombol audio 🔊 pada kartu untuk mendengarkan pelafalan asli bahasa Inggris (Native Audio) dan lihat
+            poin Scrabble masing-masing kata!
+          </p>
+        </div>
+
+        <div class="vocab-filter-bar">
+          <button class="vocab-filter-btn active" data-category="all">Semua Kosakata (All)</button>
+          <button class="vocab-filter-btn" data-category="people">👤 People (Orang)</button>
+          <button class="vocab-filter-btn" data-category="animals">🐾 Animals (Hewan)</button>
+          <button class="vocab-filter-btn" data-category="places">🏛️ Places (Tempat)</button>
+          <button class="vocab-filter-btn" data-category="things">📦 Things (Benda)</button>
+        </div>
+
+        <div class="vocab-cards-grid" id="home-vocab-grid">
+          <!-- Populated dynamically via app.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         VIEW 2: MATERI PEMBELAJARAN LENGKAP (TEXT-BASED LEARNING MATERIAL)
+         ======================================================================= -->
+    <section id="view-materi" class="app-view hidden">
+      <div class="section-header-banner">
+        <span class="section-subtitle-tag">📖 Modul Teks Lengkap</span>
+        <h2 class="section-title">Materi Pembelajaran: Descriptive Text Kelas 7 SMP</h2>
+        <p class="section-description">
+          Pelajari secara mendalam definisi, fungsi sosial, struktur teks (Generic Structure), unsur kebahasaan
+          (Language Features), rumus tata bahasa, serta contoh teks nyata beranotasi.
+        </p>
+      </div>
+
+      <div class="materi-container">
+
+        <!-- Bab 1: Definisi & Tujuan Komunikatif -->
+        <article class="materi-card">
+          <div class="materi-card-header">
+            <span class="materi-badge">BAB 1</span>
+            <h3>Definisi & Fungsi Sosial (Definition & Social Function)</h3>
+          </div>
+          <div class="materi-body">
+            <div class="concept-highlight-box">
+              <h4>📌 Apa itu Descriptive Text?</h4>
+              <p>
+                <strong>Descriptive Text</strong> adalah jenis teks dalam bahasa Inggris yang bertujuan untuk
+                menggambarkan dan mengungkapkan ciri-ciri, sifat, bentuk, atau karakteristik khusus dari suatu objek
+                tertentu secara spesifik (orang, hewan, tempat, atau benda).
+              </p>
+            </div>
+
+            <h4 class="sub-heading-materi">🎯 Tujuan Komunikatif (Social Function):</h4>
+            <ul class="materi-list-styled">
+              <li><strong>To describe</strong> a particular person, animal, place, or thing in detail. <em>(Untuk
+                  mendeskripsikan objek tertentu secara rinci).</em></li>
+              <li><strong>To give information</strong> about the specific characteristics of an object to the reader.
+                <em>(Memberikan informasi gambaran nyata agar pembaca dapat membayangkan objek tersebut seolah
+                  melihatnya langsung).</em></li>
+            </ul>
+
+            <div class="note-info-box">
+              💡 <strong>Catatan Penting:</strong> Objek dalam Descriptive Text bersifat <em>spesifik / khusus</em>,
+              bukan umum. Contoh: bukan membahas "Cats in general", melainkan kucing peliharaan tertentu seperti <em>"My
+                Persian Cat, Luna"</em>.
+            </div>
+          </div>
+        </article>
+
+        <!-- Bab 2: Struktur Generik (Generic Structure) -->
+        <article class="materi-card">
+          <div class="materi-card-header">
+            <span class="materi-badge">BAB 2</span>
+            <h3>Struktur Teks Deskriptif (Generic Structure)</h3>
+          </div>
+          <div class="materi-body">
+            <p>Sebuah teks deskriptif yang baik terdiri dari <strong>2 (dua) bagian struktur utama</strong>:</p>
+
+            <div class="generic-structure-cards-grid">
+              <div class="structure-detail-card identification-theme">
+                <div class="structure-card-top">
+                  <span class="structure-num">1</span>
+                  <div>
+                    <h4>Identification (Identifikasi)</h4>
+                    <span class="structure-pos-tag">Paragraf Pertama (Opening)</span>
+                  </div>
+                </div>
+                <div class="structure-card-content">
+                  <p><strong>Fungsi:</strong> Mengenalkan siapa atau apa objek yang akan dideskripsikan kepada pembaca.
+                  </p>
+                  <p><strong>Isi:</strong> Nama objek, lokasi umum, atau kepemilikan.</p>
+                  <div class="example-snippet">
+                    <em>"I have a best friend in my school named Radit. He is my classmate in Grade 7B."</em>
+                  </div>
+                </div>
+              </div>
+
+              <div class="structure-detail-card description-theme">
+                <div class="structure-card-top">
+                  <span class="structure-num">2</span>
+                  <div>
+                    <h4>Description (Deskripsi Rinci)</h4>
+                    <span class="structure-pos-tag">Paragraf Kedua & Seterusnya</span>
+                  </div>
+                </div>
+                <div class="structure-card-content">
+                  <p><strong>Fungsi:</strong> Menggambarkan bagian-bagian, ciri fisik, kualitas, warna, ukuran,
+                    kepribadian, atau kebiasaan objek secara rinci.</p>
+                  <p><strong>Isi:</strong> Ciri fisik (physical appearance), sifat (personality), dan detail panca
+                    indera.</p>
+                  <div class="example-snippet">
+                    <em>"Radit is tall and slim. He has curly black hair and friendly brown eyes. He is very kind,
+                      smart, and always helps me with English homework."</em>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Bab 3: Unsur Kebahasaan (Language Features) -->
+        <article class="materi-card">
+          <div class="materi-card-header">
+            <span class="materi-badge">BAB 3</span>
+            <h3>Unsur Kebahasaan (Language Features)</h3>
+          </div>
+          <div class="materi-body">
+
+            <!-- Point 1: Simple Present Tense -->
+            <div class="feature-block">
+              <h4>1. Penggunaan Simple Present Tense</h4>
+              <p>Karena teks deskriptif menyatakan fakta dan sifat kebenaran dari suatu objek, tenses yang digunakan
+                adalah <strong>Simple Present Tense</strong>.</p>
+
+              <div class="grammar-tables-grid">
+                <!-- Pola Nominal -->
+                <div class="grammar-box">
+                  <h5>A. Pola Nominal (To-Be: is / am / are)</h5>
+                  <p class="formula-line"><code>Subject + is / am / are + Adjective / Noun</code></p>
+                  <table class="mini-table">
+                    <tr>
+                      <th>Subjek</th>
+                      <th>To-Be</th>
+                      <th>Contoh Kalimat</th>
+                    </tr>
+                    <tr>
+                      <td>I</td>
+                      <td>am</td>
+                      <td>I <strong>am</strong> cheerful.</td>
+                    </tr>
+                    <tr>
+                      <td>He / She / It / Singularity</td>
+                      <td>is</td>
+                      <td>The beach <strong>is</strong> clean and beautiful.</td>
+                    </tr>
+                    <tr>
+                      <td>You / We / They / Plural</td>
+                      <td>are</td>
+                      <td>The puppies <strong>are</strong> very cute.</td>
+                    </tr>
+                  </table>
+                </div>
+
+                <!-- Pola Verbal -->
+                <div class="grammar-box">
+                  <h5>B. Pola Verbal (Kata Kerja / Verb 1 & has/have)</h5>
+                  <p class="formula-line"><code>Subject + Verb-1 (s/es) / has / have + Object</code></p>
+                  <table class="mini-table">
+                    <tr>
+                      <th>Subjek</th>
+                      <th>Verb / Has-Have</th>
+                      <th>Contoh Kalimat</th>
+                    </tr>
+                    <tr>
+                      <td>He / She / It</td>
+                      <td>has / V1+s</td>
+                      <td>My cat <strong>has</strong> a fluffy tail.</td>
+                    </tr>
+                    <tr>
+                      <td>I / You / We / They</td>
+                      <td>have / V1</td>
+                      <td>They <strong>have</strong> a spacious garden.</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Point 2: Adjectives -->
+            <div class="feature-block" style="margin-top: 2rem;">
+              <h4>2. Penggunaan Kata Sifat (Adjectives)</h4>
+              <p>Kata sifat berfungsi untuk menerangkan kata benda (*nouns*). Di kelas 7 SMP, kata sifat dikelompokkan
+                ke dalam:</p>
+
+              <div class="adjective-types-grid">
+                <div class="adj-category-card">
+                  <strong>👤 Ciri Fisik (Appearance)</strong>
+                  <p>Tall, short, slim, fat, young, old, handsome, beautiful.</p>
+                </div>
+                <div class="adj-category-card">
+                  <strong>❤️ Sifat/Watak (Personality)</strong>
+                  <p>Kind, smart, polite, brave, honest, friendly, cheerful, lazy, diligent.</p>
+                </div>
+                <div class="adj-category-card">
+                  <strong>📏 Ukuran & Bentuk (Size & Shape)</strong>
+                  <p>Big, small, huge, tiny, round, square, oval, flat.</p>
+                </div>
+                <div class="adj-category-card">
+                  <strong>🎨 Warna & Tekstur (Color & Texture)</strong>
+                  <p>Bright, shiny, soft, hard, smooth, rough, wooden, colorful.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Point 3: Sensory Verbs -->
+            <div class="feature-block" style="margin-top: 2rem;">
+              <h4>3. Kata Kerja Panca Indera (Sensory Verbs)</h4>
+              <p>Membantu pembaca merasakan deskripsi melalui indera:</p>
+              <div class="sensory-pills-row">
+                <span class="sensory-pill">👁️ <strong>Look:</strong> "It looks shiny."</span>
+                <span class="sensory-pill">👂 <strong>Sound:</strong> "The room sounds quiet."</span>
+                <span class="sensory-pill">👃 <strong>Smell:</strong> "The flower smells sweet."</span>
+                <span class="sensory-pill">👅 <strong>Taste:</strong> "The mango tastes delicious."</span>
+                <span class="sensory-pill">✋ <strong>Feel:</strong> "The blanket feels soft."</span>
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- Bab 4: Contoh Teks Nyata dengan Analisis -->
+        <article class="materi-card">
+          <div class="materi-card-header">
+            <span class="materi-badge">BAB 4</span>
+            <h3>Contoh Teks Deskriptif Nyata & Analisis Struktur</h3>
+          </div>
+          <div class="materi-body">
+            <p>Berikut 4 contoh teks deskriptif standar SMP kelas 7 lengkap dengan analisis warna struktur teks dan
+              pelafalan audio:</p>
+
+            <div class="sample-texts-container">
+
+              <!-- Sample 1: Describing a Person -->
+              <div class="sample-text-card">
+                <div class="sample-header">
+                  <div>
+                    <span class="badge badge-people">👤 Describing a Person</span>
+                    <h4>My English Teacher, Mr. Aris</h4>
+                  </div>
+                  <button class="btn-icon"
+                    onclick="window.soundEngine.speak('My English Teacher, Mr. Aris. Mr. Aris is my favorite English teacher at SMP Nusa Bangsa. He is very kind, tall, and smart. He always wears a neat shirt and has friendly brown eyes. He explains the lesson clearly so all students love his class.')">
+                    🔊 Baca Teks Lengkap
+                  </button>
+                </div>
+                <div class="annotated-paragraphs">
+                  <div class="para-row ident-row">
+                    <span class="para-label">Identification</span>
+                    <p>Mr. Aris is my favorite English teacher at SMP Nusa Bangsa. He teaches English for seventh-grade
+                      students.</p>
+                  </div>
+                  <div class="para-row desc-row">
+                    <span class="para-label">Description</span>
+                    <p>He is very <strong>kind</strong>, <strong>tall</strong>, and <strong>smart</strong>. He always
+                      wears a neat batik shirt and has <strong>friendly</strong> brown eyes. He is very patient when
+                      students ask questions and explains grammar rules clearly, making English class exciting.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sample 2: Describing an Animal -->
+              <div class="sample-text-card">
+                <div class="sample-header">
+                  <div>
+                    <span class="badge badge-animals">🐾 Describing an Animal</span>
+                    <h4>Koko, My Cute Persian Cat</h4>
+                  </div>
+                  <button class="btn-icon"
+                    onclick="window.soundEngine.speak('Koko, My Cute Persian Cat. I have a pet cat named Koko. He is a male Persian cat. Koko has thick white furry hair and round blue eyes. He has sharp claws and a long tail. He is very tame and likes drinking fresh milk.')">
+                    🔊 Baca Teks Lengkap
+                  </button>
+                </div>
+                <div class="annotated-paragraphs">
+                  <div class="para-row ident-row">
+                    <span class="para-label">Identification</span>
+                    <p>I have a lovely pet cat named Koko. He is a two-year-old male Persian cat given by my uncle on my
+                      birthday.</p>
+                  </div>
+                  <div class="para-row desc-row">
+                    <span class="para-label">Description</span>
+                    <p>Koko has thick <strong>white furry</strong> hair and <strong>round blue</strong> eyes. He has
+                      <strong>sharp</strong> claws to climb chairs and a long fluffy <strong>tail</strong>. Koko is very
+                      <strong>tame</strong>, playful, and loves purring softly when I stroke his back.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sample 3: Describing a Place -->
+              <div class="sample-text-card">
+                <div class="sample-header">
+                  <div>
+                    <span class="badge badge-places">🏛️ Describing a Place</span>
+                    <h4>The Clean and Cozy School Library</h4>
+                  </div>
+                  <button class="btn-icon"
+                    onclick="window.soundEngine.speak('The Clean and Cozy School Library. The school library is one of the most popular places in our junior high school. It is clean, quiet, and very spacious. There are modern bookshelves filled with interesting books and comfortable chairs.')">
+                    🔊 Baca Teks Lengkap
+                  </button>
+                </div>
+                <div class="annotated-paragraphs">
+                  <div class="para-row ident-row">
+                    <span class="para-label">Identification</span>
+                    <p>The school library is one of the most popular facilities in our junior high school, located next
+                      to the science laboratory.</p>
+                  </div>
+                  <div class="para-row desc-row">
+                    <span class="para-label">Description</span>
+                    <p>The library is very <strong>clean</strong>, <strong>quiet</strong>, and
+                      <strong>spacious</strong>. It has <strong>modern</strong> wooden bookshelves filled with thousands
+                      of books, novels, and encyclopedias. The air-conditioned room feels <strong>cozy</strong> and
+                      <strong>breezy</strong>, making it the perfect sanctuary for students to read and study
+                      peacefully.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sample 4: Describing a Thing -->
+              <div class="sample-text-card">
+                <div class="sample-header">
+                  <div>
+                    <span class="badge badge-things">📦 Describing an Object</span>
+                    <h4>My New Blue Backpack</h4>
+                  </div>
+                  <button class="btn-icon"
+                    onclick="window.soundEngine.speak('My New Blue Backpack. My parents gave me a new backpack for my seventh grade. It is made of strong waterproof canvas. It has a bright blue color and shiny silver zippers. It is very light yet spacious to hold all my books.')">
+                    🔊 Baca Teks Lengkap
+                  </button>
+                </div>
+                <div class="annotated-paragraphs">
+                  <div class="para-row ident-row">
+                    <span class="para-label">Identification</span>
+                    <p>My parents bought me a new backpack as a gift when I entered seventh grade at SMP.</p>
+                  </div>
+                  <div class="para-row desc-row">
+                    <span class="para-label">Description</span>
+                    <p>The bag is made of <strong>durable</strong> waterproof canvas with a <strong>bright blue</strong>
+                      color. It has <strong>shiny</strong> silver zippers and multiple <strong>spacious</strong>
+                      compartments. The shoulder straps are <strong>soft</strong> and padded, making the backpack
+                      comfortable and <strong>light</strong> to carry even when packed with heavy textbooks.</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </article>
+
+        <!-- Bab 5: Checklist Kiat Sukses Menyusun Teks Deskriptif -->
+        <article class="materi-card">
+          <div class="materi-card-header">
+            <span class="materi-badge">BAB 5</span>
+            <h3>Checklist Kiat Sukses Menulis Descriptive Text</h3>
+          </div>
+          <div class="materi-body">
+            <div class="checklist-grid">
+              <div class="check-item">
+                <span class="check-icon">✅</span>
+                <div>
+                  <strong>Tentukan Objek Spesifik:</strong>
+                  <p>Pilih satu orang, hewan, tempat, atau benda nyata yang Anda kenal baik.</p>
+                </div>
+              </div>
+              <div class="check-item">
+                <span class="check-icon">✅</span>
+                <div>
+                  <strong>Awali dengan Identification:</strong>
+                  <p>Perkenalkan nama objek dan lokasinya di paragraf pertama.</p>
+                </div>
+              </div>
+              <div class="check-item">
+                <span class="check-icon">✅</span>
+                <div>
+                  <strong>Kembangkan Description dengan Kata Sifat:</strong>
+                  <p>Gunakan variasi kata sifat (ukuran, warna, bentuk, kepribadian) yang dipelajari di Scrabble.</p>
+                </div>
+              </div>
+              <div class="check-item">
+                <span class="check-icon">✅</span>
+                <div>
+                  <strong>Konsisten Simple Present Tense:</strong>
+                  <p>Pastikan penggunaan <em>is/am/are</em> dan akhiran <em>-s/-es</em> pada subjek tunggal sudah tepat.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+              <button class="btn btn-accent" onclick="navigateToView('produk')">
+                🎮 Praktikkan Kosakata di Game Scrabble ➔
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         VIEW 3: PRODUK (INTERACTIVE SCRABBLE GAME)
+         ======================================================================= -->
+    <section id="view-produk" class="app-view hidden">
+      <div class="section-header-banner">
+        <span class="section-subtitle-tag">🎮 Media Interaktif Utama</span>
+        <h2 class="section-title">Descriptive Scrabble Adventure</h2>
+        <p class="section-description">
+          Susun huruf menjadi kata sifat dan deskripsi bahasa Inggris yang tepat, kumpulkan skor bonus pengali, dan
+          bangun kalimat deskriptif yang benar!
+        </p>
+      </div>
+
+      <div class="product-dashboard">
+        <!-- Game Top Bar -->
+        <div class="game-top-bar">
+          <div class="product-tab-group">
+            <button class="product-tab-btn active" data-tab="challenge" onclick="switchProductTab('challenge')">
+              🎯 Mode Tantangan Petunjuk (Level Clues)
+            </button>
+            <button class="product-tab-btn" data-tab="classic" onclick="switchProductTab('classic')">
+              🎲 Papan Scrabble 15x15 Klasik
+            </button>
+            <button class="product-tab-btn" data-tab="sentence" onclick="switchProductTab('sentence')">
+              🧩 Mini-Lab Kalimat Deskriptif
+            </button>
+          </div>
+
+          <div class="game-scoreboard">
+            <div class="score-badge">
+              <span class="score-label">Current Score</span>
+              <span class="score-number game-current-score">0</span>
+            </div>
+            <div class="score-badge">
+              <span class="score-label">Streak</span>
+              <span class="score-number game-streak-count" style="color: var(--accent-blue);">0</span>
+            </div>
+            <div class="score-badge">
+              <span class="score-label">High Score</span>
+              <span class="score-number game-high-score">0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBVIEW A: CHALLENGE MODE -->
+        <div id="product-mode-challenge" class="product-subview">
+          <div class="challenge-container">
+            <div class="challenge-main-area">
+              <div class="challenge-clue-box" id="challenge-clue-box">
+                <!-- Clue populated dynamically -->
+              </div>
+
+              <!-- Slots on board -->
+              <div class="challenge-slots-wrapper" id="challenge-slots-box">
+                <!-- Placed word slots populated dynamically -->
+              </div>
+
+              <!-- Rack Tiles -->
+              <div class="challenge-rack-wrapper">
+                <div class="rack-header">
+                  <span id="challenge-progress-text" class="challenge-progress-text">Challenge 1 of 40</span>
+                  <span class="challenge-hint-text">Klik huruf di rak untuk mengisi slot kata</span>
+                </div>
+                <div class="rack-tiles-container" id="challenge-rack-box">
+                  <!-- Tiles populated dynamically -->
+                </div>
+                <div class="challenge-actions-row">
+                  <button class="btn btn-secondary" onclick="window.scrabbleGame.shuffleChallengeRack()">🔀 Acak Huruf (Shuffle)</button>
+                  <button class="btn btn-outline" onclick="window.scrabbleGame.clearChallengeSlots()">🔄 Kosongkan Slot</button>
+                  <button class="btn btn-accent" onclick="window.scrabbleGame.giveHint()">💡 Minta Bantuan (Hint)</button>
+                  <button class="btn btn-primary" onclick="window.scrabbleGame.checkChallengeAnswer()">Periksa Kata ✔</button>
+                </div>
+              </div>
+
+              <div id="challenge-feedback-box" class="feedback-box hidden"></div>
+            </div>
+
+            <!-- Sidebar: Discovered Words & Definitions -->
+            <aside class="game-sidebar">
+              <h4 class="sidebar-title">
+                <span>📖 Kata Terpecahkan</span>
+                <span class="badge badge-primary">Vocabulary Bank</span>
+              </h4>
+              <div class="discovered-words-container" id="discovered-words-list">
+                <p class="empty-hint">Selesaikan tantangan di atas untuk mengumpulkan kosakata ke dalam kamus Anda!</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <!-- SUBVIEW B: CLASSIC 15x15 BOARD -->
+        <div id="product-mode-classic" class="product-subview hidden">
+          <div class="classic-game-layout">
+            
+            <!-- Quick Guide & Multiplier Legend -->
+            <div class="scrabble-guide-banner">
+              <div class="guide-steps-mini-grid">
+                <div class="guide-step-pill">
+                  <span class="step-num">1</span>
+                  <span class="step-text"><strong>Pilih Huruf:</strong> Klik huruf di rak bawah</span>
+                </div>
+                <div class="guide-step-pill">
+                  <span class="step-num">2</span>
+                  <span class="step-text"><strong>Taruh di Papan:</strong> Klik kotak yang tersambung</span>
+                </div>
+                <div class="guide-step-pill">
+                  <span class="step-num">3</span>
+                  <span class="step-text"><strong>Submit:</strong> Kumpulkan poin berlipat ganda</span>
+                </div>
+              </div>
+
+              <!-- Multiplier Legend Pills -->
+              <div class="multiplier-legend-row">
+                <span class="legend-badge legend-tw" title="Triple Word: Mengalikan total nilai seluruh kata dengan 3x">
+                  <span class="legend-color-dot tw-dot"></span> 3W (Triple Word x3)
+                </span>
+                <span class="legend-badge legend-dw" title="Double Word: Mengalikan total nilai seluruh kata dengan 2x">
+                  <span class="legend-color-dot dw-dot"></span> 2W (Double Word x2)
+                </span>
+                <span class="legend-badge legend-tl" title="Triple Letter: Mengalikan nilai huruf ini dengan 3x">
+                  <span class="legend-color-dot tl-dot"></span> 3L (Triple Letter x3)
+                </span>
+                <span class="legend-badge legend-dl" title="Double Letter: Mengalikan nilai huruf ini dengan 2x">
+                  <span class="legend-color-dot dl-dot"></span> 2L (Double Letter x2)
+                </span>
+                <span class="legend-badge legend-star" title="Center Star: Titik awal permainan (Memberikan bonus Double Word 2x)">
+                  <span class="legend-color-dot star-dot"></span> ★ (Mulai / Center 2W)
+                </span>
+              </div>
+            </div>
+
+            <!-- Main Board -->
+            <div class="board-wrapper">
+              <div class="scrabble-board-15x15" id="classic-board-grid">
+                <!-- 15x15 cells generated by scrabble.js -->
+              </div>
+            </div>
+
+            <!-- Live Turn Status & Word Preview -->
+            <div class="turn-status-card" id="classic-turn-status-card">
+              <div class="turn-status-info">
+                <span class="status-indicator-dot"></span>
+                <span id="turn-instruction-text">🎯 <strong>Giliran Anda:</strong> Klik huruf di rak, lalu klik kotak papan untuk meletakkannya.</span>
+              </div>
+              <div class="turn-word-preview-row">
+                <span class="preview-label">Kata disusun:</span>
+                <span class="preview-word-tag" id="current-word-preview">— (Belum ada huruf)</span>
+                <span class="badge badge-accent" id="current-score-preview">Estimasi: 0 Pts</span>
+              </div>
+            </div>
+
+            <!-- Controls Panel -->
+            <div class="classic-controls-panel">
+              <div class="classic-rack-wrapper">
+                <div class="rack-top-info">
+                  <strong class="rack-title">Rak Huruf Anda (Klik huruf untuk memilih):</strong>
+                  <span id="tile-bag-count" class="badge badge-pos">Bag: 90 tiles</span>
+                </div>
+                <div class="classic-rack-tiles" id="classic-rack-grid">
+                  <!-- 7 player tiles populated here -->
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="classic-actions-row">
+                <button class="btn btn-primary" onclick="window.scrabbleGame.submitClassicMove()">
+                  <svg style="width: 18px; height: 18px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  Submit Kata (Play Move)
+                </button>
+                <button class="btn btn-secondary" onclick="window.scrabbleGame.recallAllTurnTiles()" title="Batalkan dan tarik semua huruf giliran ini kembali ke rak">
+                  ↩ Tarik Huruf (Recall)
+                </button>
+                <button class="btn btn-secondary" onclick="window.scrabbleGame.shuffleRack()" title="Acak susunan huruf di rak untuk mencari kombinasi baru">
+                  🔀 Acak Rak
+                </button>
+                <button class="btn btn-outline" onclick="window.scrabbleGame.swapRackTiles()" title="Tukar huruf dengan huruf baru dari kantong">
+                  🔄 Tukar Huruf (Swap)
+                </button>
+                <button class="btn btn-accent" id="btn-toggle-suggestions" onclick="window.scrabbleGame.toggleSuggestedWords()" title="Lihat kata bahasa Inggris deskriptif yang bisa disusun dari rak">
+                  💡 Ide Kata (Word Helper)
+                </button>
+              </div>
+
+              <!-- Suggested Words Drawer -->
+              <div id="suggested-words-drawer" class="suggested-words-drawer hidden">
+                <div class="drawer-header">
+                  <h5>💡 Kata Deskriptif yang Dapat Dibuat dari Rak Anda:</h5>
+                  <button class="btn-close-drawer" onclick="window.scrabbleGame.toggleSuggestedWords()">✕</button>
+                </div>
+                <div id="suggested-words-list" class="suggested-words-list">
+                  <!-- Populated dynamically -->
+                </div>
+              </div>
+
+              <div id="classic-move-feedback" class="feedback-box hidden" style="width: 100%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SUBVIEW C: SENTENCE BUILDER MINI-LAB -->
+        <div id="product-mode-sentence" class="product-subview hidden">
+          <div id="sentence-builder-content">
+            <!-- Rendered by scrabble.js -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         VIEW 4: VIDEO PENJELASAN (SINGLE FOCUSED EXPLANATORY VIDEO)
+         ======================================================================= -->
+    <section id="view-video" class="app-view hidden">
+      <div class="section-header-banner">
+        <span class="section-subtitle-tag">🎥 Video Pembelajaran</span>
+        <h2 class="section-title">Video Penjelasan: Materi Descriptive Text Kelas 7 SMP</h2>
+        <p class="section-description">
+          Saksikan pemaparan audio-visual lengkap mengenai konsep, fungsi sosial, struktur generik, dan ciri kebahasaan
+          teks deskriptif untuk memperkuat pemahaman Anda.
+        </p>
+      </div>
+
+      <div class="single-video-layout">
+        <!-- Main Video Container -->
+        <div class="main-video-card">
+          <div class="responsive-video-frame">
+            <iframe src="https://www.youtube.com/embed/IEF6rtgcZxQ"
+              title="Descriptive Text Video - English Grade 7 SMP"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <div class="video-main-meta">
+            <div class="video-meta-badges">
+              <span class="badge badge-primary">Materi Pokok SMP Kelas 7</span>
+              <span class="badge badge-accent">Kurikulum Merdeka</span>
+              <span class="badge badge-pos">Full HD Explanation</span>
+            </div>
+            <h3>Pelajaran Bahasa Inggris: Descriptive Text (Definisi, Struktur & Contoh)</h3>
+            <p class="video-desc-text">
+              Video pembelajaran ini memandu siswa memahami esensi <em>Descriptive Text</em> secara runut. Mulai dari
+              cara membedakan kalimat identifikasi awal, mengidentifikasi kata sifat fisik (*physical adjectives*) dan
+              sifat watak (*personality*), hingga penerapan kalimat <em>Simple Present Tense</em> dalam teks lisan dan
+              tulis.
+            </p>
+          </div>
+        </div>
+
+        <!-- Video Key Points & Bookmarks -->
+        <div class="video-summary-grid">
+          <div class="summary-card">
+            <div class="summary-icon">📍</div>
+            <h4>1. Definisi & Fungsi</h4>
+            <p>Mendeskripsikan objek spesifik (orang, binatang, tempat, benda) agar pembaca dapat membayangkan wujud dan
+              sifatnya secara nyata.</p>
+          </div>
+          <div class="summary-card">
+            <div class="summary-icon">🏗️</div>
+            <h4>2. Dua Bagian Struktur</h4>
+            <p><strong>Identification</strong> (pengenalan objek di paragraf pembuka) dan <strong>Description</strong>
+              (penjabaran detail ciri dan karakteristik di paragraf isi).</p>
+          </div>
+          <div class="summary-card">
+            <div class="summary-icon">🔤</div>
+            <h4>3. Ciri Kebahasaan</h4>
+            <p>Dominan menggunakan <strong>Simple Present Tense</strong>, kata sifat (<em>Adjectives</em>), serta kata
+              kerja penghubung (<em>is/am/are</em> dan <em>has/have</em>).</p>
+          </div>
+          <div class="summary-card">
+            <div class="summary-icon">🎮</div>
+            <h4>4. Integrasi Scrabble</h4>
+            <p>Memperkuat hafalan ejaan kosakata deskriptif melalui permainan susun ubin huruf Scrabble untuk menambah
+              perbendaharaan kata.</p>
+          </div>
+        </div>
+
+        <!-- Call to Action below Video -->
+        <div class="video-cta-box">
+          <p>Sudah selesai menonton video penjelasan? Uji pemahaman Anda dengan memainkan game atau kuis evaluasi!</p>
+          <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1rem;">
+            <button class="btn btn-accent" onclick="navigateToView('produk')">🎮 Praktikkan di Game Scrabble</button>
+            <button class="btn btn-primary" onclick="navigateToView('penilaian')">📝 Uji Kuis Penilaian (10
+              Soal)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         VIEW 5: PENILAIAN (EVALUATION, QUIZ & RUBRIC)
+         ======================================================================= -->
+    <section id="view-penilaian" class="app-view hidden">
+      <div class="section-header-banner">
+        <span class="section-subtitle-tag">📊 Evaluasi Hasil Belajar</span>
+        <h2 class="section-title">Penilaian, Kuis Interaktif & Rubrik Keterampilan</h2>
+        <p class="section-description">
+          Uji pemahaman materi Descriptive Text dan penguasaan kosakata Scrabble melalui kuis 10 butir soal, dapatkan
+          umpan balik instan, dan unduh Sertifikat Prestasi!
+        </p>
+      </div>
+
+      <div class="assessment-grid">
+        <!-- Main Quiz Card -->
+        <div class="quiz-card-container">
+          <!-- Quiz Intro State -->
+          <div id="quiz-intro-box" class="quiz-intro-box">
+            <div style="font-size: 3.5rem; margin-bottom: 0.5rem;">🏆</div>
+            <h3>Evaluasi Mandiri: Descriptive Text & Scrabble</h3>
+            <p style="color: #cbd5e1; margin-top: 0.5rem;">
+              Kuis ini terdiri dari 10 soal pilihan ganda standar kurikulum bahasa Inggris kelas 7 SMP.
+            </p>
+            <div class="quiz-meta-pills">
+              <span class="badge badge-primary">10 Butir Soal</span>
+              <span class="badge badge-accent">100 Poin Maksimal</span>
+              <span class="badge badge-pos">Passing Grade: 70</span>
+            </div>
+            <button class="btn btn-primary btn-lg" onclick="window.quizManager.startQuiz()"
+              style="padding: 1rem 2.5rem; font-size: 1.1rem;">
+              🚀 Mulai Kuis Sekarang
+            </button>
+          </div>
+
+          <!-- Quiz Active Question Card -->
+          <div id="quiz-question-card" class="quiz-active-box hidden">
+            <div class="quiz-top-bar">
+              <span id="quiz-q-num" class="badge badge-primary">Question 1 of 10</span>
+              <span id="quiz-timer-text" class="badge badge-accent">⏱️ 00:00</span>
+            </div>
+
+            <div class="quiz-progress-bar">
+              <div id="quiz-progress-bar-fill" class="quiz-progress-bar-fill"></div>
+            </div>
+
+            <h3 id="quiz-q-text" class="quiz-q-title">Loading Question...</h3>
+
+            <div class="quiz-options-list" id="quiz-options-container">
+              <!-- Options buttons rendered by quiz.js -->
+            </div>
+
+            <div class="quiz-nav-row">
+              <button id="btn-quiz-prev" class="btn btn-secondary" onclick="window.quizManager.prevQuestion()">
+                ⬅ Previous
+              </button>
+              <button id="btn-quiz-next" class="btn btn-primary" onclick="window.quizManager.nextQuestion()">
+                Next Question ➔
+              </button>
+            </div>
+          </div>
+
+          <!-- Quiz Results Screen -->
+          <div id="quiz-result-card" class="result-card-content hidden">
+            <div id="result-score-circle" class="result-score-circle">
+              <span id="result-score-val">0/100</span>
+            </div>
+
+            <span id="result-achievement-badge" class="result-badge-text">🏆 Achievement Badge</span>
+
+            <div id="result-score-summary" class="result-summary-text">
+              <!-- Summary populated by quiz.js -->
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 1rem; margin: 1.5rem 0; flex-wrap: wrap;">
+              <button id="btn-open-certificate" class="btn btn-accent">
+                📜 Buat & Unduh Sertifikat Nilai
+              </button>
+              <button class="btn btn-secondary" onclick="window.quizManager.startQuiz()">
+                🔄 Ulangi Kuis (Retry)
+              </button>
+            </div>
+
+            <!-- Review of Question Answers & Explanations -->
+            <div class="review-section">
+              <h4 style="font-family: var(--font-display); font-size: 1.3rem; color: #f8fafc; margin-bottom: 1rem;">
+                🔍 Pembahasan Soal & Kunci Jawaban
+              </h4>
+              <div id="quiz-review-list" class="review-list">
+                <!-- Review cards populated by quiz.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rubrik Penilaian Keterampilan Siswa (Assessment Matrix) -->
+        <div class="rubric-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h3 style="font-family: var(--font-display); font-size: 1.4rem; color: #f8fafc;">
+                📋 Rubrik Penilaian Keterampilan & Kinerja Siswa
+              </h3>
+              <p style="color: #94a3b8; font-size: 0.9rem;">
+                Digunakan oleh guru/pendidik maupun siswa untuk mengukur pencapaian indikator kompetensi materi
+                Descriptive Text.
+              </p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <span id="rubric-calculated-score" class="badge badge-accent"
+                style="font-size: 1rem; padding: 0.4rem 1rem;">100/100</span>
+              <span id="rubric-calculated-grade"
+                style="color: var(--accent-blue); font-weight: 700; font-size: 0.9rem;">Predikat: Sangat Memuaskan
+                (A)</span>
+            </div>
+          </div>
+
+          <table class="rubric-table">
+            <thead>
+              <tr>
+                <th>Aspek Penilaian</th>
+                <th>Deskriptor Kinerja</th>
+                <th style="width: 180px;">Skor Capaian</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>1. Penguasaan Kosakata (Vocabulary Mastery)</strong></td>
+                <td>Kemampuan mengeja kata sifat deskriptif (Adjectives) dan mencocokkan makna leksikal dengan tepat
+                  pada Scrabble.</td>
+                <td>
+                  <select class="rubric-select" id="rubric-score-1">
+                    <option value="25" selected>Sangat Baik (25 Poin)</option>
+                    <option value="20">Baik (20 Poin)</option>
+                    <option value="15">Cukup (15 Poin)</option>
+                    <option value="10">Kurang (10 Poin)</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>2. Pemahaman Struktur Teks (Generic Structure)</strong></td>
+                <td>Kemampuan membedakan bagian <em>Identification</em> dan <em>Description</em> pada teks bacaan
+                  deskriptif.</td>
+                <td>
+                  <select class="rubric-select" id="rubric-score-2">
+                    <option value="25" selected>Sangat Baik (25 Poin)</option>
+                    <option value="20">Baik (20 Poin)</option>
+                    <option value="15">Cukup (15 Poin)</option>
+                    <option value="10">Kurang (10 Poin)</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>3. Tata Bahasa & Struktur Kalimat (Grammar & Syntax)</strong></td>
+                <td>Ketepatan dalam merangkai kalimat <em>Simple Present Tense</em> menggunakan kata kerja bantu
+                  <em>is/am/are</em> dan <em>has/have</em>.</td>
+                <td>
+                  <select class="rubric-select" id="rubric-score-3">
+                    <option value="25" selected>Sangat Baik (25 Poin)</option>
+                    <option value="20">Baik (20 Poin)</option>
+                    <option value="15">Cukup (15 Poin)</option>
+                    <option value="10">Kurang (10 Poin)</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>4. Keterlibatan & Partisipasi Gamifikasi (Engagement)</strong></td>
+                <td>Keaktifan menyelesaikan tantangan level Scrabble, eksplorasi audio pelafalan, dan ketekunan belajar
+                  mandiri.</td>
+                <td>
+                  <select class="rubric-select" id="rubric-score-4">
+                    <option value="25" selected>Sangat Baik (25 Poin)</option>
+                    <option value="20">Baik (20 Poin)</option>
+                    <option value="15">Cukup (15 Poin)</option>
+                    <option value="10">Kurang (10 Poin)</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         VIEW 6: DASHBOARD GURU & REKAPITULASI EVALUASI
+         ========================================================================= -->
+    <section id="view-guru" class="app-view hidden">
+      <!-- Guru View Header -->
+      <div class="view-header-banner">
+        <div class="header-badge-row">
+          <span class="badge badge-accent">PORTAL PENDIDIK & ASESMEN</span>
+          <span class="badge badge-guru">KHUSUS GURU</span>
+        </div>
+        <h1 class="view-title">👨‍🏫 Rekap Nilai</h1>
+        <p class="view-subtitle">
+          Monitoring capaian belajar siswa kelas 7 SMP, rekapitulasi nilai kuis interaktif, instrumen rubrik penilaian formatif, dan ekspor laporan hasil belajar.
+        </p>
+      </div>
+
+      <!-- Quick Teacher Metric Cards -->
+      <div class="teacher-stats-grid">
+        <div class="t-stat-card">
+          <div class="t-stat-icon">👥</div>
+          <div class="t-stat-info">
+            <span class="t-stat-label">Total Siswa Dinilai</span>
+            <h3 class="t-stat-val" id="t-stat-total-students">0</h3>
+            <span class="t-stat-sub">Semua Kelas 7A - 7H</span>
+          </div>
+        </div>
+        <div class="t-stat-card">
+          <div class="t-stat-icon">📈</div>
+          <div class="t-stat-info">
+            <span class="t-stat-label">Rata-rata Nilai Kuis</span>
+            <h3 class="t-stat-val" id="t-stat-avg-score">0.0</h3>
+            <span class="t-stat-sub">Skala 100</span>
+          </div>
+        </div>
+        <div class="t-stat-card">
+          <div class="t-stat-icon">🎯</div>
+          <div class="t-stat-info">
+            <span class="t-stat-label">Ketuntasan Belajar</span>
+            <h3 class="t-stat-val" id="t-stat-pass-rate">0%</h3>
+            <span class="t-stat-sub">KKM / KKTP: 75</span>
+          </div>
+        </div>
+        <div class="t-stat-card">
+          <div class="t-stat-icon">🏆</div>
+          <div class="t-stat-info">
+            <span class="t-stat-label">Nilai Tertinggi</span>
+            <h3 class="t-stat-val" id="t-stat-highest-score">0</h3>
+            <span class="t-stat-sub" id="t-stat-top-student">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teacher Rekap Table Card -->
+      <div class="penilaian-card mt-3">
+        <div class="table-toolbar">
+          <div class="toolbar-left">
+            <h3 class="card-section-title">📊 Tabel Rekapitulasi Hasil Belajar Siswa</h3>
+            <span class="rekap-count-badge" id="rekap-badge-count">0 Data</span>
+          </div>
+          <div class="toolbar-actions">
+            <div class="filter-group">
+              <label for="filter-guru-class" class="filter-label">Filter Kelas:</label>
+              <select id="filter-guru-class" class="form-select" onchange="filterTeacherTable()">
+                <option value="all">Semua Kelas (7A - 7H)</option>
+                <option value="7A">Kelas 7A</option>
+                <option value="7B">Kelas 7B</option>
+                <option value="7C">Kelas 7C</option>
+                <option value="7D">Kelas 7D</option>
+                <option value="7E">Kelas 7E</option>
+                <option value="7F">Kelas 7F</option>
+                <option value="7G">Kelas 7G</option>
+                <option value="7H">Kelas 7H</option>
+              </select>
+            </div>
+            <div class="search-group">
+              <input type="text" id="search-guru-student" class="form-input" placeholder="🔍 Cari nama siswa..." oninput="filterTeacherTable()">
+            </div>
+            <button class="btn btn-sm btn-primary" onclick="openAddScoreModal()">
+              ➕ Input Nilai
+            </button>
+            <button class="btn btn-sm btn-secondary" onclick="exportStudentDataCSV()">
+              📊 Ekspor CSV
+            </button>
+            <button class="btn btn-sm btn-accent" onclick="window.print()">
+              🖨️ Cetak Rekap
+            </button>
+            <button class="btn btn-sm btn-outline-danger" onclick="resetStudentRecapData()" title="Reset semua data nilai">
+              🗑️ Reset Data
+            </button>
+          </div>
+        </div>
+
+        <div class="rubric-table-wrapper">
+          <table class="rubric-table teacher-table" id="teacher-rekap-table">
+            <thead>
+              <tr>
+                <th style="width: 50px;">No</th>
+                <th>Waktu / Tanggal</th>
+                <th>Nama Siswa</th>
+                <th>Kelas</th>
+                <th>Skor Kuis</th>
+                <th>Nilai Rubrik</th>
+                <th>Total Akhir</th>
+                <th>Predikat & Status</th>
+                <th style="width: 90px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="teacher-rekap-tbody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Quick Teacher Guides & Rubric Instrument Reference -->
+      <div class="materi-grid-2col mt-3">
+        <div class="concept-card">
+          <div class="concept-badge">PANDUAN ASESMEN FORMATIF</div>
+          <h3 class="concept-title">📘 Petunjuk Penilaian Guru</h3>
+          <ul class="clean-bullet-list">
+            <li><strong>Asesmen Kuis Interaktif:</strong> Terdiri dari 10 butir soal pilihan ganda berbasis analisis <em>Generic Structure</em>, <em>Grammar (Simple Present Tense)</em>, dan <em>Adjectives</em>.</li>
+            <li><strong>Asesmen Keterampilan (Game Scrabble):</strong> Mengukur ketangkasan pembentukan kata deskriptif dan pengucapan fonetik.</li>
+            <li><strong>Kriteria Ketercapaian Tujuan Pembelajaran (KKTP):</strong> Nilai minimal tuntas adalah <strong>75</strong>. Siswa dengan nilai di bawah 75 disarankan melakukan eksplorasi ulang di menu <em>Materi Teks</em> dan <em>Produk Game</em>.</li>
+          </ul>
+        </div>
+        <div class="concept-card">
+          <div class="concept-badge">ADMINISTRASI KELAS</div>
+          <h3 class="concept-title">🔒 Pengelolaan Data & Sesi Guru</h3>
+          <p class="concept-p">
+            Akun Guru saat ini login sebagai: <strong class="text-accent" id="guru-session-display">admin (Administrator Guru)</strong>.
+          </p>
+          <div class="mt-2" style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn btn-sm btn-secondary" onclick="generateSampleStudentData()">
+              🔄 Isi Data Simulasi (Demo 8 Siswa)
+            </button>
+            <button class="btn btn-sm btn-danger" onclick="logoutUser()">
+              🚪 Keluar dari Portal Guru
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       MODAL: CERTIFICATE OF ACHIEVEMENT
+       ========================================================================= -->
+  <div id="certificate-modal" class="modal-overlay hidden">
+    <div class="certificate-modal-box animate-pop">
+      <div class="modal-header">
+        <h3 style="font-family: var(--font-display); font-size: 1.4rem; color: #f8fafc;">
+          📜 Sertifikat Kelulusan & Prestasi Siswa
+        </h3>
+        <button id="btn-close-certificate" class="btn-close-modal">✖</button>
+      </div>
+
+      <div class="cert-input-row">
+        <input type="text" id="cert-student-name" placeholder="Ketik Nama Lengkap Siswa..." value="Siswa Kelas 7 SMP">
+        <button id="btn-render-cert" class="btn btn-primary">Perbarui Nama ✏️</button>
+      </div>
+
+      <div class="canvas-preview-wrapper">
+        <canvas id="certificate-canvas"></canvas>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+        <button id="btn-download-cert" class="btn btn-accent">
+          📥 Unduh Gambar Sertifikat (PNG)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: AUTHENTICATION (SISWA & GURU)
+       ========================================================================= -->
+  <div id="auth-modal-overlay" class="modal-overlay hidden">
+    <div class="auth-modal-box animate-pop">
+      <div class="auth-modal-header">
+        <div class="auth-modal-title-group">
+          <div class="brand-logo-tile" style="width: 36px; height: 36px; font-size: 1.2rem;">
+            <span class="logo-letter">D</span>
+          </div>
+          <div>
+            <h3 class="auth-modal-title">Portal Akses Pengguna</h3>
+            <p class="auth-modal-subtitle">Project Tataa - Descriptive Scrabble Kelas 7 SMP</p>
+          </div>
+        </div>
+        <button id="btn-close-auth" class="btn-close-modal" onclick="closeAuthModal()">✖</button>
+      </div>
+
+      <!-- Tab Switcher -->
+      <div class="auth-tabs">
+        <button id="tab-btn-student" class="auth-tab-btn active" onclick="switchAuthTab('student')">
+          <span class="tab-icon">🎒</span> Masuk Siswa
+        </button>
+        <button id="tab-btn-teacher" class="auth-tab-btn" onclick="switchAuthTab('teacher')">
+          <span class="tab-icon">👨‍🏫</span> Portal Guru (Admin)
+        </button>
+      </div>
+
+      <!-- Tab 1: Form Siswa -->
+      <div id="auth-form-student" class="auth-tab-content">
+        <div class="auth-info-banner">
+          <span class="info-icon">💡</span>
+          <p>Masukkan nama lengkap dan kelas untuk mencatat nilai kuis serta mencetak sertifikat prestasi belajar Anda.</p>
+        </div>
+        <form id="form-student-login" onsubmit="handleStudentLogin(event)">
+          <div class="form-group">
+            <label for="student-auth-name" class="form-label">Nama Lengkap Siswa <span class="text-danger">*</span></label>
+            <input type="text" id="student-auth-name" class="form-input" placeholder="Contoh: Muhammad Farhan Pratama" required autofocus>
+          </div>
+          <div class="form-group">
+            <label for="student-auth-class" class="form-label">Pilihan Kelas SMP <span class="text-danger">*</span></label>
+            <select id="student-auth-class" class="form-select" required>
+              <option value="" disabled selected>-- Pilih Kelas Anda --</option>
+              <option value="7A">Kelas 7A</option>
+              <option value="7B">Kelas 7B</option>
+              <option value="7C">Kelas 7C</option>
+              <option value="7D">Kelas 7D</option>
+              <option value="7E">Kelas 7E</option>
+              <option value="7F">Kelas 7F</option>
+              <option value="7G">Kelas 7G</option>
+              <option value="7H">Kelas 7H</option>
+            </select>
+          </div>
+          <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary btn-block btn-lg">
+              🚀 Mulai Belajar & Bermain
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tab 2: Form Guru -->
+      <div id="auth-form-teacher" class="auth-tab-content hidden">
+        <div class="auth-info-banner guru-banner">
+          <span class="info-icon">🔒</span>
+          <p>Halaman ini khusus Guru/Pendidik untuk memantau rekap nilai, mengekspor hasil belajar siswa, dan mengelola asesmen.</p>
+        </div>
+        <div id="teacher-auth-error" class="auth-error-alert hidden">
+          ⚠️ <strong>Gagal Masuk:</strong> Username atau Password guru tidak sesuai. Silakan coba lagi!
+        </div>
+        <form id="form-teacher-login" onsubmit="handleTeacherLogin(event)">
+          <div class="form-group">
+            <label for="teacher-auth-user" class="form-label">Username Guru <span class="text-danger">*</span></label>
+            <input type="text" id="teacher-auth-user" class="form-input" placeholder="Masukkan username guru (admin)" required>
+          </div>
+          <div class="form-group">
+            <label for="teacher-auth-pass" class="form-label">Password <span class="text-danger">*</span></label>
+            <input type="password" id="teacher-auth-pass" class="form-input" placeholder="Masukkan password (admin123)" required>
+          </div>
+          <div class="teacher-credential-hint">
+            <span>🔑 <strong>Kredensial Default Guru:</strong> Username: <code>admin</code> | Password: <code>admin123</code></span>
+          </div>
+          <div class="form-group mt-3">
+            <button type="submit" class="btn btn-accent btn-block btn-lg">
+              🔓 Masuk Portal Guru
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: MANUAL ADD / INPUT NILAI SISWA (GURU DASHBOARD)
+       ========================================================================= -->
+  <div id="modal-add-score" class="modal-overlay hidden">
+    <div class="auth-modal-box animate-pop" style="max-width: 500px;">
+      <div class="auth-modal-header">
+        <h3 class="auth-modal-title">➕ Input Nilai Siswa Manual</h3>
+        <button class="btn-close-modal" onclick="closeAddScoreModal()">✖</button>
+      </div>
+      <form id="form-manual-score" onsubmit="handleManualAddScore(event)">
+        <div class="form-group">
+          <label for="manual-student-name" class="form-label">Nama Siswa</label>
+          <input type="text" id="manual-student-name" class="form-input" placeholder="Ketik nama siswa..." required>
+        </div>
+        <div class="form-group">
+          <label for="manual-student-class" class="form-label">Kelas</label>
+          <select id="manual-student-class" class="form-select" required>
+            <option value="7A">Kelas 7A</option>
+            <option value="7B">Kelas 7B</option>
+            <option value="7C">Kelas 7C</option>
+            <option value="7D">Kelas 7D</option>
+            <option value="7E">Kelas 7E</option>
+            <option value="7F">Kelas 7F</option>
+            <option value="7G">Kelas 7G</option>
+            <option value="7H">Kelas 7H</option>
+          </select>
+        </div>
+        <div class="grid-2col-gap">
+          <div class="form-group">
+            <label for="manual-quiz-score" class="form-label">Skor Kuis (0-100)</label>
+            <input type="number" id="manual-quiz-score" class="form-input" min="0" max="100" value="85" required>
+          </div>
+          <div class="form-group">
+            <label for="manual-rubric-score" class="form-label">Nilai Rubrik (0-100)</label>
+            <input type="number" id="manual-rubric-score" class="form-input" min="0" max="100" value="90" required>
+          </div>
+        </div>
+        <div class="form-group mt-3" style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" class="btn btn-secondary" onclick="closeAddScoreModal()">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Data Nilai</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <strong>PROJECT TATAA - DESCRIPTIVE SCRABBLE</strong>
+        <p>Media Pembelajaran Interaktif Bahasa Inggris SMP Kelas 7</p>
+      </div>
+      <div class="footer-credits">
+        <p>Materi Pokok: <strong>Descriptive Text (Kurikulum Merdeka)</strong></p>
+        <p>Dukungan Localhost & Offline First</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Scripts -->
+  <script src="js/audio.js?v=5"></script>
+  <script src="js/dictionary.js"></script>
+  <script src="js/scrabble.js?v=2"></script>
+  <script src="js/quiz.js?v=5"></script>
+  <script src="js/app.js?v=7"></script>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "project-tataa-scrabble-descriptive-text",
+  "version": "1.0.0",
+  "description": "Interactive English Scrabble Web Application for 7th Grade SMP Descriptive Text Material - Multimedia Learning Project",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -l 3000 .",
+    "dev": "npx serve -l 3000 ."
+  },
+  "keywords": [
+    "scrabble",
+    "english-learning",
+    "descriptive-text",
+    "smp-grade-7",
+    "educational-game",
+    "multimedia-pembelajaran"
+  ],
+  "author": "Tataa - Pengembangan Multimedia MTP 2026",
+  "license": "MIT"
+}
