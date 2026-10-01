@@ -824,15 +824,15 @@ function handleManualAddScore(e) {
 }
 
 function deleteStudentScoreRecord(id) {
-  alert('Penghapusan data tidak dapat dilakukan dari sini karena data terhubung ke Google Sheets.\\nSilakan hapus baris data secara langsung di dalam dokumen Google Sheets Anda.');
+  alert('Penghapusan data tidak dapat dilakukan dari sini karena data terhubung ke Google Sheets.\nSilakan hapus baris data secara langsung di dalam dokumen Google Sheets Anda.');
 }
 
 function resetStudentRecapData() {
-  alert('Reset data tidak dapat dilakukan dari sini karena data terhubung ke Google Sheets.\\nSilakan hapus baris-baris data secara langsung di dalam dokumen Google Sheets Anda.');
+  alert('Reset data tidak dapat dilakukan dari sini karena data terhubung ke Google Sheets.\nSilakan hapus baris-baris data secara langsung di dalam dokumen Google Sheets Anda.');
 }
 
 function generateSampleStudentData(reRender = true) {
-  alert('Generasi data simulasi dinonaktifkan pada versi Google Sheets untuk menghindari spam data ke server Anda.\\nSilakan coba input manual atau kerjakan kuis sebagai siswa.');
+  alert('Generasi data simulasi dinonaktifkan pada versi Google Sheets untuk menghindari spam data ke server Anda.\nSilakan coba input manual atau kerjakan kuis sebagai siswa.');
 }
 
 function exportStudentDataCSV() {
