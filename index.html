@@ -47,6 +47,17 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="#cptp" data-view-target="cptp">
+              <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="6"/>
+                <circle cx="12" cy="12" r="2"/>
+              </svg>
+              <span>CP & TP</span>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#materi" data-view-target="materi">
               <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -227,7 +238,7 @@
             <span class="badge badge-primary">Preview Game</span>
             <span class="badge badge-accent">14 Points</span>
           </div>
-          <p style="color: #cbd5e1; font-size: 0.9rem; margin-top: 0.5rem;">
+          <p style="font-size: 0.9rem; margin-top: 0.5rem;">
             Contoh susunan kata sifat (Adjective) mendeskripsikan kepribadian:
           </p>
           <div class="scrabble-demo-tiles">
@@ -311,6 +322,44 @@
         <div class="vocab-cards-grid" id="home-vocab-grid">
           <!-- Populated dynamically via app.js -->
         </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         VIEW CP & TP (CAPAIAN & TUJUAN PEMBELAJARAN)
+         ======================================================================= -->
+    <section id="view-cptp" class="app-view hidden">
+      <div class="section-header-banner">
+        <span class="section-subtitle-tag">🎯 Kurikulum Merdeka</span>
+        <h2 class="section-title">Capaian & Tujuan Pembelajaran (CP & TP)</h2>
+        <p class="section-description">
+          Berikut adalah Capaian Pembelajaran (CP) dan Tujuan Pembelajaran (TP) untuk materi Descriptive Text Bahasa Inggris Fase D (Kelas 7 SMP).
+        </p>
+      </div>
+
+      <div class="materi-container">
+        <article class="materi-card">
+          <div class="materi-card-header">
+            <h3>Capaian Pembelajaran (CP) Fase D</h3>
+          </div>
+          <div class="materi-body">
+            <p style="margin-bottom: 1rem;">Pada akhir Fase D, peserta didik menggunakan teks lisan, tulisan dan visual dalam bahasa Inggris untuk berinteraksi dan berkomunikasi dalam konteks yang lebih beragam dan dalam situasi formal dan informal.</p>
+            <p>Peserta didik dapat menggunakan berbagai jenis teks seperti narasi, deskripsi, prosedur, teks khusus (pesan singkat, iklan) dan teks otentik menjadi rujukan utama dalam mempelajari bahasa Inggris di fase ini.</p>
+          </div>
+        </article>
+
+        <article class="materi-card">
+          <div class="materi-card-header">
+            <h3>Tujuan Pembelajaran (TP) Deskriptif Teks</h3>
+          </div>
+          <div class="materi-body">
+            <ul class="materi-list-styled">
+              <li>Peserta didik mampu mengidentifikasi konteks, gagasan utama, dan informasi terperinci dari teks deskriptif lisan maupun tulisan.</li>
+              <li>Peserta didik mampu menjelaskan karakteristik, ciri fisik, dan sifat dari orang, binatang, tempat, atau benda dengan menggunakan kosakata yang tepat.</li>
+              <li>Peserta didik mampu menyusun dan mempresentasikan teks deskriptif sederhana secara lisan dan tulisan dengan menggunakan struktur teks dan unsur kebahasaan yang benar.</li>
+            </ul>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -1085,10 +1134,10 @@
         <div class="rubric-card">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <div>
-              <h3 style="font-family: var(--font-display); font-size: 1.4rem; color: #f8fafc;">
+              <h3 style="font-family: var(--font-display); font-size: 1.4rem;">
                 📋 Rubrik Penilaian Keterampilan & Kinerja Siswa
               </h3>
-              <p style="color: #94a3b8; font-size: 0.9rem;">
+              <p style="font-size: 0.9rem;">
                 Digunakan oleh guru/pendidik maupun siswa untuk mengukur pencapaian indikator kompetensi materi
                 Descriptive Text.
               </p>
@@ -1433,6 +1482,34 @@
         </form>
       </div>
 
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: LOGOUT CONFIRMATION
+       ========================================================================= -->
+  <div id="logout-modal-overlay" class="modal-overlay hidden">
+    <div class="auth-modal-box animate-pop" style="max-width: 450px;">
+      <div class="auth-modal-header">
+        <div class="auth-modal-title-group">
+          <div class="brand-logo-tile" style="width: 36px; height: 36px; font-size: 1.2rem; background: var(--accent-rose);">
+            <span class="logo-letter" style="color: white;">!</span>
+          </div>
+          <div>
+            <h3 class="auth-modal-title">Konfirmasi Keluar</h3>
+            <p class="auth-modal-subtitle">Keluar dari Sesi Anda</p>
+          </div>
+        </div>
+        <button class="btn-close-modal" onclick="closeLogoutModal()">✖</button>
+      </div>
+
+      <div style="padding: 1.5rem;">
+        <p id="logout-modal-message" style="color: var(--text-main); margin-bottom: 2rem; font-size: 1.05rem; text-align: left; line-height: 1.6;"></p>
+        <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+          <button class="btn btn-outline" onclick="closeLogoutModal()">Batal</button>
+          <button class="btn btn-primary" style="background: var(--accent-rose); border-color: var(--accent-rose);" onclick="confirmLogoutAction()">Ya, Keluar</button>
+        </div>
+      </div>
     </div>
   </div>
 

@@ -35,24 +35,44 @@ class ScrabbleGame {
         pattern: ["My friend", "[To Be / Has]", "[Adjective]", "and", "[Adjective]"],
         slots: [1, 2, 4],
         types: ["verb", "people", "people"],
+        correctVerb: "is",
+        validWords: {
+          2: ["SMART", "KIND", "BRAVE", "TALL", "YOUNG", "FRIENDLY", "CHEERFUL", "POLITE"],
+          4: ["SMART", "KIND", "BRAVE", "TALL", "YOUNG", "FRIENDLY", "CHEERFUL", "POLITE"]
+        },
         example: "My friend is smart and kind."
       },
       {
         pattern: ["The lion", "[To Be / Has]", "a", "[Adjective]", "tail and", "[Adjective]", "claws."],
         slots: [1, 3, 5],
         types: ["verb", "animals", "animals"],
+        correctVerb: "has",
+        validWords: {
+          3: ["FURRY", "LONG", "SHORT", "SWIFT"],
+          5: ["SHARP", "FIERCE"]
+        },
         example: "The lion has a furry tail and sharp claws."
       },
       {
         pattern: ["The school library", "[To Be / Has]", "[Adjective]", "and", "[Adjective]"],
         slots: [1, 2, 4],
         types: ["verb", "places", "places"],
+        correctVerb: "is",
+        validWords: {
+          2: ["CLEAN", "COZY", "SPACIOUS", "QUIET", "TIDY", "MODERN", "HISTORIC"],
+          4: ["CLEAN", "COZY", "SPACIOUS", "QUIET", "TIDY", "MODERN", "HISTORIC"]
+        },
         example: "The school library is clean and spacious."
       },
       {
         pattern: ["This watch", "[To Be / Has]", "made of", "[Adjective]", "metal and is very", "[Adjective]"],
         slots: [1, 3, 5],
         types: ["verb", "things", "things"],
+        correctVerb: "is",
+        validWords: {
+          3: ["BRIGHT", "SHINY", "HEAVY"],
+          5: ["LIGHT", "HEAVY", "ROUND", "MODERN"]
+        },
         example: "This watch is made of shiny metal and is very light."
       }
     ];
@@ -1120,6 +1140,62 @@ class ScrabbleGame {
       if (feedbackEl) {
         feedbackEl.className = 'feedback-box feedback-error animate-fade-in';
         feedbackEl.innerHTML = '⚠️ Please fill all adjective slots before checking!';
+      }
+      window.soundEngine.playErrorSound();
+      return;
+    }
+
+    // Check grammatical agreement for verb
+    const verbSlotIdx = currentTpl.slots.find((idx, i) => currentTpl.types[i] === 'verb');
+    if (verbSlotIdx !== undefined && currentTpl.correctVerb) {
+      const userVerb = this.sentenceUserSlots[verbSlotIdx];
+      if (userVerb !== currentTpl.correctVerb) {
+        if (feedbackEl) {
+          feedbackEl.className = 'feedback-box feedback-error animate-fade-in';
+          feedbackEl.innerHTML = `⚠️ <strong>Grammatical Error:</strong> The subject "${currentTpl.pattern[0]}" does not agree with the verb "<strong>${userVerb}</strong>".<br><small>Hint: Try using "<strong>${currentTpl.correctVerb}</strong>".</small>`;
+        }
+        window.soundEngine.playErrorSound();
+        return;
+      }
+    }
+
+    // Check semantic logic for adjectives
+    const invalidAdjectiveIdx = currentTpl.slots.findIndex((slotIdx, i) => {
+      const slotType = currentTpl.types[i];
+      if (slotType === 'verb') return false; // skip verb
+      
+      const userWord = this.sentenceUserSlots[slotIdx].toUpperCase();
+      
+      // Strict validWords check if available
+      if (currentTpl.validWords && currentTpl.validWords[slotIdx]) {
+        if (!currentTpl.validWords[slotIdx].includes(userWord)) {
+          return true; // invalid word for this specific slot
+        }
+      } else {
+        // Fallback: check category if validWords is missing
+        const vocabEntry = DESCRIPTIVE_VOCABULARY.find(v => v.word.toUpperCase() === userWord);
+        if (vocabEntry && vocabEntry.category !== slotType) return true;
+      }
+      return false;
+    });
+
+    if (invalidAdjectiveIdx !== -1) {
+      const badSlotIdx = currentTpl.slots[invalidAdjectiveIdx];
+      const badWord = this.sentenceUserSlots[badSlotIdx];
+      
+      const vocabEntry = DESCRIPTIVE_VOCABULARY.find(v => v.word.toUpperCase() === badWord.toUpperCase());
+      const badWordMeaning = vocabEntry ? vocabEntry.translation.toLowerCase() : '';
+      const subject = currentTpl.pattern[0]; // e.g. "The lion", "My friend"
+      
+      if (feedbackEl) {
+        feedbackEl.className = 'feedback-box feedback-error animate-fade-in';
+        feedbackEl.innerHTML = `
+          ⚠️ <strong>Context Error:</strong> Kata "<strong>${badWord}</strong>" tidak masuk akal dalam kalimat ini.<br>
+          <small style="display:block; margin-top:0.5rem; line-height:1.5;">
+            Kata <strong>${badWord}</strong> (<em>${badWordMeaning}</em>) kurang tepat digunakan untuk mendeskripsikan konteks pada subjek "${subject}".<br>
+            <strong>Contoh kalimat yang benar:</strong> "${currentTpl.example}"
+          </small>
+        `;
       }
       window.soundEngine.playErrorSound();
       return;

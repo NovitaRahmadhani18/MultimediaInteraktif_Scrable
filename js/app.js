@@ -389,6 +389,15 @@ function initThemeAndAudioToggles() {
       }
     });
 
+    // Slider progress visualizer
+    const updateSliderProgress = (slider) => {
+      const min = parseFloat(slider.min) || 0;
+      const max = parseFloat(slider.max) || 1;
+      const val = parseFloat(slider.value) || 0;
+      const pct = ((val - min) / (max - min)) * 100;
+      slider.style.setProperty('--val', `${pct}%`);
+    };
+
     // SFX bindings
     const toggleSfx = document.getElementById('toggle-sfx');
     const volumeSfx = document.getElementById('volume-sfx');
@@ -399,8 +408,10 @@ function initThemeAndAudioToggles() {
       });
     }
     if (volumeSfx) {
+      updateSliderProgress(volumeSfx);
       volumeSfx.addEventListener('input', (e) => {
         window.soundEngine.setSfxVolume(parseFloat(e.target.value));
+        updateSliderProgress(e.target);
       });
     }
 
@@ -413,8 +424,10 @@ function initThemeAndAudioToggles() {
       });
     }
     if (volumeBgm) {
+      updateSliderProgress(volumeBgm);
       volumeBgm.addEventListener('input', (e) => {
         window.soundEngine.setBgmVolume(parseFloat(e.target.value));
+        updateSliderProgress(e.target);
       });
     }
   }
@@ -522,21 +535,34 @@ function openAuthModal(defaultTab = 'student') {
   const modal = document.getElementById('auth-modal-overlay');
   if (!modal) return;
   
-  // If user is already logged in, prompt logout confirmation
+  // If user is already logged in, show custom logout modal instead
   if (authManager.role) {
-    const userDesc = authManager.isStudent() ? `Siswa: ${authManager.username} (${authManager.studentClass})` : `Guru (admin)`;
-    const confirmLogout = confirm(`Anda saat ini masuk sebagai ${userDesc}.\n\nApakah Anda ingin keluar (Logout) atau mengganti akun?`);
-    if (confirmLogout) {
-      authManager.logout();
-      return;
-    } else {
-      return;
+    const userDesc = authManager.isStudent() ? `Siswa: <strong>${authManager.username}</strong> (${authManager.studentClass})` : `Guru (admin)`;
+    const logoutModal = document.getElementById('logout-modal-overlay');
+    const logoutMessage = document.getElementById('logout-modal-message');
+    if (logoutModal && logoutMessage) {
+      logoutMessage.innerHTML = `Anda saat ini masuk sebagai ${userDesc}.<br><br>Apakah Anda yakin ingin keluar (Logout) atau mengganti akun?`;
+      logoutModal.classList.remove('hidden');
     }
+    return;
   }
 
   modal.classList.remove('hidden');
   switchAuthTab(defaultTab);
 }
+
+function closeLogoutModal() {
+  const logoutModal = document.getElementById('logout-modal-overlay');
+  if (logoutModal) logoutModal.classList.add('hidden');
+}
+
+function confirmLogoutAction() {
+  closeLogoutModal();
+  authManager.logout();
+}
+
+window.closeLogoutModal = closeLogoutModal;
+window.confirmLogoutAction = confirmLogoutAction;
 
 function closeAuthModal() {
   const modal = document.getElementById('auth-modal-overlay');
@@ -627,8 +653,14 @@ function handleTeacherLogin(e) {
 }
 
 function logoutUser() {
-  if (confirm('Apakah Anda yakin ingin keluar dari sesi saat ini?')) {
-    authManager.logout();
+  if (authManager.role) {
+    const userDesc = authManager.isStudent() ? `Siswa: <strong>${authManager.username}</strong> (${authManager.studentClass})` : `Guru (admin)`;
+    const logoutModal = document.getElementById('logout-modal-overlay');
+    const logoutMessage = document.getElementById('logout-modal-message');
+    if (logoutModal && logoutMessage) {
+      logoutMessage.innerHTML = `Anda saat ini masuk sebagai ${userDesc}.<br><br>Apakah Anda yakin ingin keluar (Logout) atau mengganti akun?`;
+      logoutModal.classList.remove('hidden');
+    }
   }
 }
 
