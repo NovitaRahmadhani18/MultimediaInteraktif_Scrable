@@ -2740,56 +2740,219 @@ body {
 
 @media (max-width: 768px) {
   .nav-container {
-    padding: 0.6rem 1rem;
+    padding: 0.5rem 0.75rem;
+    gap: 0.4rem;
+  }
+
+  .nav-brand {
+    gap: 0.5rem;
   }
 
   .brand-logo-tile {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
   }
 
   .logo-letter {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 
   .brand-title {
-    font-size: 0.95rem;
-  }
-
-  .brand-badge {
-    font-size: 0.58rem;
-    padding: 0.1rem 0.35rem;
+    font-size: 0.88rem;
   }
 
   .brand-desc {
-    font-size: 0.65rem;
+    display: none; /* Sembunyikan subjudul panjang di navbar HP agar muat */
   }
 
+  .brand-badge {
+    font-size: 0.55rem;
+    padding: 0.1rem 0.3rem;
+  }
+
+  .nav-actions {
+    gap: 0.3rem;
+  }
+
+  .btn-session,
+  .btn-toggle-theme,
+  .btn-toggle-sound {
+    padding: 0.38rem 0.55rem;
+    font-size: 0.75rem;
+    gap: 0.3rem;
+  }
+
+  /* Sembunyikan label teks di tombol navbar HP, tampilkan ikon saja agar rapi */
+  .theme-label,
+  .sound-label {
+    display: none;
+  }
+
+  .btn-session span#session-display-name {
+    max-width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-menu-btn {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+  }
+
+  /* Main Wrapper & Layout di HP */
+  .main-wrapper {
+    padding: 1rem 0.75rem 3rem;
+  }
+
+  .section-header-banner {
+    padding: 1.5rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.45rem;
+    line-height: 1.3;
+  }
+
+  .section-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .hero-content h1 {
+    font-size: 1.85rem;
+  }
+
+  /* Penilaian & Kuis di HP */
+  .assessment-grid {
+    gap: 1.25rem;
+  }
+
+  .quiz-card-container {
+    padding: 1.25rem 1rem;
+  }
+
+  .quiz-intro-box h3 {
+    font-size: 1.35rem;
+  }
+
+  .quiz-intro-box p {
+    font-size: 0.9rem;
+  }
+
+  .quiz-meta-pills {
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .quiz-meta-pills .badge {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .quiz-intro-box button {
+    width: 100% !important;
+    padding: 0.85rem 1.25rem !important;
+    font-size: 1rem !important;
+  }
+
+  .quiz-option-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  /* Scrabble Board & Game Lobby */
   .scrabble-board-15x15 {
-    grid-template-columns: repeat(15, 22px);
-    grid-template-rows: repeat(15, 22px);
+    grid-template-columns: repeat(15, 20px);
+    grid-template-rows: repeat(15, 20px);
     padding: 4px;
     gap: 1px;
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .board-cell .scrabble-tile .tile-letter {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
   }
 
   .board-cell .scrabble-tile .tile-score {
     display: none;
   }
 
-  .hero-content h1 {
-    font-size: 2.1rem;
+  .para-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Minigames Grid & Kartu Kotak-kotak di HP */
+  .minigames-grid-selector {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem;
+  }
+
+  .game-stat-card {
+    padding: 0.75rem 1rem;
+  }
+
+  .minigame-card {
+    padding: 1rem;
+  }
+
+  .rush-word-box {
+    font-size: 1.6rem;
+    letter-spacing: 0.2rem;
+  }
+
+  .riddle-options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .duel-options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer responsif */
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .footer-credits {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0.45rem 0.5rem;
+  }
+
+  .brand-title {
+    font-size: 0.82rem;
+  }
+
+  .btn-session,
+  .btn-toggle-theme,
+  .btn-toggle-sound {
+    padding: 0.32rem 0.45rem;
+  }
+
+  .btn-session span#session-display-name {
+    display: none; /* Di layar sangat sempit < 480px, tampilkan ikon avatar */
+  }
+
+  .quiz-card-container {
+    padding: 1rem 0.75rem;
   }
 
   .section-title {
-    font-size: 1.75rem;
+    font-size: 1.3rem;
   }
 
-  .para-row {
-    grid-template-columns: 1fr;
+  .quiz-intro-box h3 {
+    font-size: 1.2rem;
   }
 }
 
