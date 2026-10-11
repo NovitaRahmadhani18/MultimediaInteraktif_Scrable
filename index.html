@@ -774,6 +774,21 @@
             <button class="product-tab-btn" data-tab="sentence" onclick="switchProductTab('sentence')">
               🧩 Mini-Lab Kalimat Deskriptif
             </button>
+            <button class="product-tab-btn" data-tab="memory" onclick="switchProductTab('memory')">
+              🃏 Kartu Memori Kata & Arti
+            </button>
+            <button class="product-tab-btn" data-tab="scramble" onclick="switchProductTab('scramble')">
+              ⚡ Word Rush (Tebak Cepat)
+            </button>
+            <button class="product-tab-btn" data-tab="wordsearch" onclick="switchProductTab('wordsearch')">
+              🔍 Word Search Puzzle
+            </button>
+            <button class="product-tab-btn" data-tab="riddle" onclick="switchProductTab('riddle')">
+              ❓ Siapakah Aku? (Mystery Riddle)
+            </button>
+            <button class="product-tab-btn" data-tab="battle" onclick="switchProductTab('battle')">
+              ⚔️ Duel Kosakata (Synonym vs Antonym)
+            </button>
           </div>
 
           <div class="game-scoreboard">
@@ -953,6 +968,41 @@
             <!-- Rendered by scrabble.js -->
           </div>
         </div>
+
+        <!-- SUBVIEW D: MEMORY WORD MATCH -->
+        <div id="product-mode-memory" class="product-subview hidden">
+          <div id="memory-game-content">
+            <!-- Rendered by minigames.js -->
+          </div>
+        </div>
+
+        <!-- SUBVIEW E: WORD RUSH (SCRAMBLE) -->
+        <div id="product-mode-scramble" class="product-subview hidden">
+          <div id="scramble-game-content">
+            <!-- Rendered by minigames.js -->
+          </div>
+        </div>
+
+        <!-- SUBVIEW F: WORD SEARCH PUZZLE -->
+        <div id="product-mode-wordsearch" class="product-subview hidden">
+          <div id="wordsearch-game-content">
+            <!-- Rendered by minigames.js -->
+          </div>
+        </div>
+
+        <!-- SUBVIEW G: MYSTERY RIDDLE (SIAPAKAH AKU) -->
+        <div id="product-mode-riddle" class="product-subview hidden">
+          <div id="riddle-game-content">
+            <!-- Rendered by minigames.js -->
+          </div>
+        </div>
+
+        <!-- SUBVIEW H: DUEL KOSAKATA (SYNONYM VS ANTONYM) -->
+        <div id="product-mode-battle" class="product-subview hidden">
+          <div id="battle-game-content">
+            <!-- Rendered by minigames.js -->
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1120,7 +1170,7 @@
 
             <!-- Review of Question Answers & Explanations -->
             <div class="review-section">
-              <h4 style="font-family: var(--font-display); font-size: 1.3rem; color: #f8fafc; margin-bottom: 1rem;">
+              <h4 class="review-section-title">
                 🔍 Pembahasan Soal & Kunci Jawaban
               </h4>
               <div id="quiz-review-list" class="review-list">
@@ -1559,8 +1609,36 @@
   </div>
 
   <!-- =========================================================================
-       FOOTER
+       MODAL: CUSTOM POPUP ALERT (CLEAN CARD DIALOG)
        ========================================================================= -->
+  <div id="custom-alert-modal" class="modal-overlay hidden" style="z-index: 9999;">
+    <div class="custom-alert-card animate-pop">
+      <!-- Content -->
+      <div class="custom-alert-body">
+        <h3 id="custom-alert-title" class="custom-alert-title">
+          YAY! LUAR BIASA! <span class="custom-alert-star">🌟</span>
+        </h3>
+        
+        <p id="custom-alert-message" class="custom-alert-message">
+          Hebat sekali! Nilai kuis Anda telah otomatis tersimpan ke server dan Dashboard Guru.
+        </p>
+
+        <div id="custom-alert-highlight" class="custom-alert-highlight hidden">
+          <span id="custom-alert-score-num" class="highlight-score-num">100</span>
+          <span class="highlight-score-label">Poin Prestasi</span>
+        </div>
+
+        <button id="custom-alert-btn" class="custom-alert-action-btn" onclick="closeCustomAlert()">
+          Pembahasan Soal & Kunci Jawaban
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interactive FX Canvas (Confetti & Fireworks) -->
+  <canvas id="fx-celebration-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 10000;"></canvas>
+
+
   <footer class="app-footer">
     <div class="footer-container">
       <div class="footer-brand">
@@ -1578,6 +1656,7 @@
   <script src="js/audio.js?v=5"></script>
   <script src="js/dictionary.js"></script>
   <script src="js/scrabble.js?v=2"></script>
+  <script src="js/minigames.js"></script>
   <script src="js/quiz.js?v=5"></script>
   <script src="js/app.js?v=9"></script>
 </body>

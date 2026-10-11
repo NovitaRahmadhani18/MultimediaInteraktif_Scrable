@@ -144,9 +144,22 @@ class QuizManager {
 
   startQuiz() {
     if (window.authManager && !window.authManager.isStudent() && !window.authManager.isTeacher()) {
-      alert("Harap masuk (login) terlebih dahulu untuk memulai kuis dan menyimpan nilai Anda.");
-      if (typeof window.openAuthModal === 'function') {
-        window.openAuthModal();
+      if (typeof window.showCustomAlert === 'function') {
+        window.showCustomAlert({
+          title: "AYO MASUK DULU! 👋",
+          message: "Harap masuk (login) sebagai Siswa terlebih dahulu untuk memulai kuis dan mencatat nilai ke server.",
+          buttonText: "Buka Portal Masuk",
+          onConfirm: () => {
+            if (typeof window.openAuthModal === 'function') {
+              window.openAuthModal();
+            }
+          }
+        });
+      } else {
+        alert("Harap masuk (login) terlebih dahulu untuk memulai kuis dan menyimpan nilai Anda.");
+        if (typeof window.openAuthModal === 'function') {
+          window.openAuthModal();
+        }
       }
       return;
     }
@@ -271,11 +284,37 @@ class QuizManager {
     const quizResult = document.getElementById('quiz-result-card');
 
     if (quizCard) quizCard.classList.add('hidden');
-    if (quizResult) quizResult.classList.remove('hidden');
-
-    window.soundEngine.playVictoryFanfare();
+    // Keep quizResult hidden so the popup appears first before the review page
+    if (quizResult) quizResult.classList.add('hidden');
 
     this.renderQuizResults(correctCount);
+
+    if (this.score >= 50 && typeof window.launchCelebrationFireworks === 'function') {
+      window.launchCelebrationFireworks(90);
+    }
+
+    // Immediately trigger the celebration popup (don't wait for background fetch)
+    if (typeof window.showCustomAlert === 'function') {
+      window.showCustomAlert({
+        title: "YAY! LUAR BIASA! 🌟",
+        message: "Hebat sekali! Nilai kuis Anda telah otomatis tersimpan ke server dan Dashboard Guru.",
+        score: this.score,
+        scoreLabel: "Poin Kuis",
+        buttonText: "Pembahasan Soal & Kunci Jawaban",
+        onConfirm: () => {
+          if (quizResult) {
+            quizResult.classList.remove('hidden');
+            quizResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          if (window.soundEngine) {
+            window.soundEngine.playVictoryFanfare();
+          }
+        }
+      });
+    } else {
+      if (quizResult) quizResult.classList.remove('hidden');
+      window.soundEngine.playVictoryFanfare();
+    }
   }
 
   renderQuizResults(correctCount) {
@@ -335,8 +374,10 @@ class QuizManager {
         return `
           <div class="review-item ${isCorrect ? 'correct-item' : 'wrong-item'}">
             <div class="review-header">
-              <span class="q-badge">${idx + 1}</span>
-              <strong>${q.question}</strong>
+              <div class="review-question-group">
+                <span class="q-badge">${idx + 1}</span>
+                <span class="q-text">${q.question}</span>
+              </div>
               <span class="status-tag">${isCorrect ? '✔ Benar (+10)' : '✖ Salah'}</span>
             </div>
             <p class="ans-line">Jawaban Anda: <span class="${isCorrect ? 'text-success' : 'text-danger'}">${userAnsText}</span></p>

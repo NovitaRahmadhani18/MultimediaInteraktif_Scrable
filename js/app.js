@@ -111,8 +111,19 @@ function navigateToView(viewId, updateHash = true) {
       window.scrabbleGame.initChallengeMode('all');
       window.scrabbleGameInitialized = true;
     }
-  } else if (viewId === 'guru') {
-    renderTeacherDashboard();
+    // If scramble tab was active, resume timer
+    const scrambleTab = document.querySelector('.product-tab-btn[data-tab="scramble"]');
+    if (scrambleTab && scrambleTab.classList.contains('active')) {
+      if (window.miniGamesManager) window.miniGamesManager.resumeRushTimer();
+    }
+  } else {
+    // If leaving produk view, pause Word Rush timer
+    if (window.miniGamesManager) {
+      window.miniGamesManager.pauseRushTimer();
+    }
+    if (viewId === 'guru') {
+      renderTeacherDashboard();
+    }
   }
 }
 
@@ -215,7 +226,12 @@ function switchProductTab(tabName) {
   const subviews = [
     { name: 'challenge', id: 'product-mode-challenge' },
     { name: 'classic', id: 'product-mode-classic' },
-    { name: 'sentence', id: 'product-mode-sentence' }
+    { name: 'sentence', id: 'product-mode-sentence' },
+    { name: 'memory', id: 'product-mode-memory' },
+    { name: 'scramble', id: 'product-mode-scramble' },
+    { name: 'wordsearch', id: 'product-mode-wordsearch' },
+    { name: 'riddle', id: 'product-mode-riddle' },
+    { name: 'battle', id: 'product-mode-battle' }
   ];
 
   subviews.forEach(view => {
@@ -233,7 +249,16 @@ function switchProductTab(tabName) {
 
   // Mode-specific game initializations
   try {
-    if (window.scrabbleGame) {
+    // If leaving scramble tab, pause the timer
+    if (tabName !== 'scramble' && window.miniGamesManager) {
+      window.miniGamesManager.pauseRushTimer();
+    }
+
+    if (['memory', 'scramble', 'wordsearch', 'riddle', 'battle'].includes(tabName)) {
+      if (window.miniGamesManager && typeof window.miniGamesManager.initMode === 'function') {
+        window.miniGamesManager.initMode(tabName);
+      }
+    } else if (window.scrabbleGame) {
       window.scrabbleGame.currentMode = tabName;
       if (tabName === 'challenge') {
         if (!window.scrabbleGame.currentChallengeWord) {
@@ -419,14 +444,20 @@ function initThemeAndAudioToggles() {
     const toggleBgm = document.getElementById('toggle-bgm');
     const volumeBgm = document.getElementById('volume-bgm');
     if (toggleBgm) {
+      // Sync toggle with current soundEngine state
+      toggleBgm.checked = window.soundEngine ? window.soundEngine.bgmEnabled : false;
       toggleBgm.addEventListener('change', (e) => {
-        window.soundEngine.toggleBGM(e.target.checked);
+        if (window.soundEngine) {
+          window.soundEngine.toggleBGM(e.target.checked);
+        }
       });
     }
     if (volumeBgm) {
       updateSliderProgress(volumeBgm);
       volumeBgm.addEventListener('input', (e) => {
-        window.soundEngine.setBgmVolume(parseFloat(e.target.value));
+        if (window.soundEngine) {
+          window.soundEngine.setBgmVolume(parseFloat(e.target.value));
+        }
         updateSliderProgress(e.target);
       });
     }
@@ -614,11 +645,11 @@ function handleStudentLogin(e) {
   authManager.loginStudent(name, className);
   closeAuthModal();
 
-  if (window.soundEngine && typeof window.soundEngine.playSuccess === 'function') {
-    window.soundEngine.playSuccess();
-  }
-
-  alert(`Selamat datang, ${name}! Profil belajar Anda (${className}) telah aktif.`);
+  showCustomAlert({
+    title: "SELAMAT DATANG! 🎉",
+    message: `Halo ${name}! Profil belajar Anda (Kelas ${className}) telah aktif. Selamat bermain dan belajar!`,
+    buttonText: "Mulai Petualangan"
+  });
 }
 
 function handleTeacherLogin(e) {
@@ -920,14 +951,192 @@ function recordStudentQuizResult(quizScore, grade) {
     body: JSON.stringify(newRecord)
   }).then(() => {
     console.log("Data berhasil dikirim ke Google Sheets!");
-    alert("Berhasil! Nilai kuis Anda telah otomatis tersimpan ke server dan Dashboard Guru.");
   }).catch(error => {
-    console.error("Gagal mengirim data:", error);
-    alert("Gagal menyimpan nilai ke server. Pastikan koneksi internet stabil.");
+    console.error("Gagal mengirim data ke server Google Sheets:", error);
   });
 }
 
+/* =========================================================================
+ * CUSTOM POPUP NOTIFICATION MODAL (KID-FRIENDLY & ANIMATED)
+ * ========================================================================= */
+let customAlertCallback = null;
+
+function showCustomAlert(options = {}) {
+  const modal = document.getElementById('custom-alert-modal');
+  if (!modal) return;
+
+  const titleEl = document.getElementById('custom-alert-title');
+  const messageEl = document.getElementById('custom-alert-message');
+  const highlightEl = document.getElementById('custom-alert-highlight');
+  const scoreNumEl = document.getElementById('custom-alert-score-num');
+  const btnEl = document.getElementById('custom-alert-btn');
+
+  if (titleEl) {
+    titleEl.innerHTML = options.title || 'YAY! LUAR BIASA! <span class="custom-alert-star">🌟</span>';
+    if (options.type === 'error') {
+      titleEl.style.color = '#ef4444';
+    } else {
+      titleEl.style.color = '#00b874';
+    }
+  }
+
+  if (messageEl) {
+    messageEl.textContent = options.message || 'Latihan berhasil diselesaikan dengan baik!';
+  }
+
+  if (highlightEl) {
+    if (options.score !== undefined && options.score !== null) {
+      highlightEl.classList.remove('hidden');
+      if (scoreNumEl) scoreNumEl.textContent = options.score;
+      const labelEl = highlightEl.querySelector('.highlight-score-label');
+      if (labelEl) labelEl.textContent = options.scoreLabel || 'Poin Prestasi';
+    } else {
+      highlightEl.classList.add('hidden');
+    }
+  }
+
+  if (btnEl) {
+    btnEl.textContent = options.buttonText || 'Kembali ke Beranda';
+  }
+
+  customAlertCallback = options.onConfirm || null;
+
+  modal.classList.remove('hidden');
+
+  // Play cheerful fanfare / pop sound
+  if (window.soundEngine) {
+    if (options.type === 'error') {
+      window.soundEngine.play('wrong');
+    } else {
+      window.soundEngine.play('fanfare');
+    }
+  }
+}
+
+function closeCustomAlert() {
+  const modal = document.getElementById('custom-alert-modal');
+  if (modal) modal.classList.add('hidden');
+
+  if (window.soundEngine) {
+    window.soundEngine.play('pop');
+  }
+
+  if (typeof customAlertCallback === 'function') {
+    const cb = customAlertCallback;
+    customAlertCallback = null;
+    cb();
+  }
+}
+
+/* =========================================================================
+ * INTERACTIVE CELEBRATION EFFECTS: CONFETTI & FIREWORKS ENGINE
+ * ========================================================================= */
+class CelebrationFX {
+  constructor() {
+    this.canvas = document.getElementById('fx-celebration-canvas');
+    this.ctx = this.canvas ? this.canvas.getContext('2d') : null;
+    this.particles = [];
+    this.animId = null;
+
+    if (this.canvas) {
+      this.resize();
+      window.addEventListener('resize', () => this.resize());
+    }
+  }
+
+  resize() {
+    if (!this.canvas) return;
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+
+  trigger(type = 'confetti', count = 60) {
+    if (!this.canvas || !this.ctx) {
+      this.canvas = document.getElementById('fx-celebration-canvas');
+      if (this.canvas) this.ctx = this.canvas.getContext('2d');
+      else return;
+    }
+    this.resize();
+
+    const colors = ['#f59e0b', '#10b981', '#3b82f6', '#ec4899', '#8b5cf6', '#f43f5e', '#fef08a'];
+    const originX = window.innerWidth / 2;
+    const originY = window.innerHeight * 0.45;
+
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.random() * Math.PI * 2);
+      const speed = Math.random() * 8 + 4;
+      this.particles.push({
+        x: originX + (Math.random() * 60 - 30),
+        y: originY + (Math.random() * 40 - 20),
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 3,
+        size: Math.random() * 7 + 4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * 360,
+        rotationSpeed: (Math.random() - 0.5) * 12,
+        gravity: 0.22,
+        life: 1,
+        decay: Math.random() * 0.015 + 0.012,
+        shape: Math.random() > 0.4 ? 'rect' : 'circle'
+      });
+    }
+
+    if (!this.animId) {
+      this.render();
+    }
+  }
+
+  render() {
+    if (!this.ctx || !this.canvas) return;
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      const p = this.particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += p.gravity;
+      p.vx *= 0.98;
+      p.rotation += p.rotationSpeed;
+      p.life -= p.decay;
+
+      if (p.life <= 0) {
+        this.particles.splice(i, 1);
+        continue;
+      }
+
+      this.ctx.save();
+      this.ctx.globalAlpha = p.life;
+      this.ctx.translate(p.x, p.y);
+      this.ctx.rotate((p.rotation * Math.PI) / 180);
+      this.ctx.fillStyle = p.color;
+
+      if (p.shape === 'rect') {
+        this.ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+      } else {
+        this.ctx.beginPath();
+        this.ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+      this.ctx.restore();
+    }
+
+    if (this.particles.length > 0) {
+      this.animId = requestAnimationFrame(() => this.render());
+    } else {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.animId = null;
+    }
+  }
+}
+
+const celebrationFX = new CelebrationFX();
+window.launchCelebrationFireworks = (count = 70) => {
+  celebrationFX.trigger('fireworks', count);
+};
+
 // Expose global methods to window
+window.showCustomAlert = showCustomAlert;
+window.closeCustomAlert = closeCustomAlert;
 window.openAuthModal = openAuthModal;
 window.closeAuthModal = closeAuthModal;
 window.switchAuthTab = switchAuthTab;
@@ -944,5 +1153,7 @@ window.exportStudentDataCSV = exportStudentDataCSV;
 window.filterTeacherTable = filterTeacherTable;
 window.renderTeacherDashboard = renderTeacherDashboard;
 window.recordStudentQuizResult = recordStudentQuizResult;
+
+
 
 

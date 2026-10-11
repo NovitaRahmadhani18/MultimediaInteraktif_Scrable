@@ -323,6 +323,9 @@ class ScrabbleGame {
       }
 
       window.soundEngine.playWordSuccess();
+      if (typeof window.launchCelebrationFireworks === 'function') {
+        window.launchCelebrationFireworks(50);
+      }
 
       // Record to discovered list
       if (!this.discoveredWords.find(w => w.word === targetWord)) {
@@ -980,6 +983,9 @@ class ScrabbleGame {
       }
 
       window.soundEngine.playWordSuccess();
+      if (typeof window.launchCelebrationFireworks === 'function') {
+        window.launchCelebrationFireworks(50);
+      }
 
       if (vocabEntry && !this.discoveredWords.find(w => w.word === upperWord)) {
         this.discoveredWords.unshift(vocabEntry);
@@ -1209,6 +1215,9 @@ class ScrabbleGame {
 
     this.score += 25;
     window.soundEngine.playWordSuccess();
+    if (typeof window.launchCelebrationFireworks === 'function') {
+      window.launchCelebrationFireworks(65);
+    }
 
     if (feedbackEl) {
       feedbackEl.className = 'feedback-box feedback-success animate-fade-in';

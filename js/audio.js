@@ -12,10 +12,17 @@ class SoundEngine {
     this.sfxVolume = 1.0;
     
     this.bgmEnabled = false;
-    this.bgmVolume = 0.2;
+    this.bgmVolume = 0.25;
     this.bgmGain = null;
     this.bgmInterval = null;
     this.bgmOscillators = [];
+    this.isPlayingBgm = false;
+    
+    // Support file audio bgm.m4a (or bgm.mp3) with loop
+    this.bgmAudio = new Audio('bgm.m4a');
+    this.bgmAudio.loop = true;
+    this.bgmAudio.volume = this.bgmVolume;
+    this.useAudioElement = true; // Use real audio file first, fallback to synth if not available
     
     this.speechEnabled = true;
     this.initAudioContext();
@@ -43,6 +50,11 @@ class SoundEngine {
     }
   }
 
+  // Alias for backward compatibility with SoundManager snippet
+  ensureContext() {
+    this.ensureContextRunning();
+  }
+
   toggleSound(state) {
     if (state !== undefined) {
       this.sfxEnabled = state;
@@ -58,9 +70,9 @@ class SoundEngine {
   }
   
   setSfxVolume(val) {
-    this.sfxVolume = val;
-    if (this.sfxEnabled && this.sfxMasterGain) {
-      this.sfxMasterGain.gain.setTargetAtTime(val, this.audioCtx.currentTime, 0.1);
+    this.sfxVolume = Math.max(0, Math.min(1, val));
+    if (this.sfxEnabled && this.sfxMasterGain && this.audioCtx) {
+      this.sfxMasterGain.gain.setTargetAtTime(this.sfxVolume, this.audioCtx.currentTime, 0.1);
     }
   }
 
@@ -72,7 +84,6 @@ class SoundEngine {
     }
     
     if (this.bgmEnabled) {
-      this.ensureContextRunning();
       this.startBGM();
     } else {
       this.stopBGM();
@@ -80,15 +91,61 @@ class SoundEngine {
     return this.bgmEnabled;
   }
 
+  toggleBgm(state) {
+    return this.toggleBGM(state);
+  }
+
   setBgmVolume(val) {
-    this.bgmVolume = val;
-    if (this.bgmGain && this.bgmEnabled) {
-      this.bgmGain.gain.setTargetAtTime(val, this.audioCtx.currentTime, 0.1);
+    this.bgmVolume = Math.max(0, Math.min(1, val));
+    if (this.bgmAudio) {
+      this.bgmAudio.volume = this.bgmVolume;
+    }
+    if (this.bgmGain && this.audioCtx) {
+      this.bgmGain.gain.setTargetAtTime(this.bgmVolume, this.audioCtx.currentTime, 0.1);
     }
   }
 
   startBGM() {
-    if (this.bgmGain) return; // already playing
+    this.ensureContextRunning();
+    this.isPlayingBgm = true;
+
+    // Try playing bgm.m4a first
+    if (this.useAudioElement && this.bgmAudio) {
+      this.bgmAudio.volume = this.bgmVolume;
+      const playPromise = this.bgmAudio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          // Successfully playing bgm.m4a
+          this.stopSynthBGM();
+        }).catch(err => {
+          console.log("bgm.m4a not found or autoplay restricted, falling back to playful chiptune synth:", err);
+          this.startSynthBGM();
+        });
+        return;
+      }
+    }
+    
+    this.startSynthBGM();
+  }
+
+  startBgm() {
+    this.startBGM();
+  }
+
+  stopBGM() {
+    this.isPlayingBgm = false;
+    if (this.bgmAudio) {
+      this.bgmAudio.pause();
+    }
+    this.stopSynthBGM();
+  }
+
+  stopBgm() {
+    this.stopBGM();
+  }
+
+  startSynthBGM() {
+    if (this.bgmGain) return; // already playing synth
     if (!this.audioCtx) return;
     
     this.bgmGain = this.audioCtx.createGain();
@@ -172,7 +229,7 @@ class SoundEngine {
     this.bgmInterval = setInterval(playStep, stepDuration * 1000);
   }
 
-  stopBGM() {
+  stopSynthBGM() {
     if (this.bgmInterval) {
       clearInterval(this.bgmInterval);
       this.bgmInterval = null;
@@ -191,33 +248,65 @@ class SoundEngine {
   // Generic play dispatcher
   play(type = 'click') {
     try {
-      if (type === 'click' || type === 'tile') this.playTileClick();
-      else if (type === 'success') this.playWordSuccess();
+      if (type === 'click' || type === 'tile' || type === 'pop') this.playPop();
+      else if (type === 'slice') this.playSlice();
+      else if (type === 'success' || type === 'correct') this.playCorrect();
       else if (type === 'bonus') this.playBonusSound();
-      else if (type === 'error' || type === 'invalid') this.playErrorSound();
-      else if (type === 'shuffle') this.playShuffleSound();
-      else if (type === 'gameover' || type === 'win' || type === 'fanfare') this.playVictoryFanfare();
-      else this.playTileClick();
+      else if (type === 'error' || type === 'invalid' || type === 'wrong') this.playWrong();
+      else if (type === 'shuffle') this.playSlice();
+      else if (type === 'gameover' || type === 'win' || type === 'fanfare') this.playFanfare();
+      else this.playPop();
     } catch (e) {
       console.warn("Sound play error:", e);
     }
   }
 
-  // Play tile place sound (soft wooden click)
-  playTileClick() {
-    if (!this.sfxEnabled || !this.audioCtx) return;
+  // Kid-Friendly Pop Sound (Tile placement / Button click)
+  playPop() {
+    if (!this.sfxEnabled) return;
     this.ensureContextRunning();
+    if (!this.audioCtx) return;
+
+    const osc = this.audioCtx.createOscillator();
+    const gain = this.audioCtx.createGain();
+    const now = this.audioCtx.currentTime;
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(450, now);
+    osc.frequency.exponentialRampToValueAtTime(850, now + 0.08);
+
+    gain.gain.setValueAtTime(0.25 * this.sfxVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.01 * this.sfxVolume, now + 0.08);
+
+    osc.connect(gain);
+    if (this.sfxMasterGain) gain.connect(this.sfxMasterGain);
+    else gain.connect(this.audioCtx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.08);
+  }
+
+  // Backward-compatible alias for playPop
+  playTileClick() {
+    this.playPop();
+  }
+
+  // Kid-Friendly Slice / Swish Sound
+  playSlice() {
+    if (!this.sfxEnabled) return;
+    this.ensureContextRunning();
+    if (!this.audioCtx) return;
 
     const osc = this.audioCtx.createOscillator();
     const gain = this.audioCtx.createGain();
     const now = this.audioCtx.currentTime;
 
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(320, now);
-    osc.frequency.exponentialRampToValueAtTime(160, now + 0.05);
+    osc.frequency.setValueAtTime(600, now);
+    osc.frequency.exponentialRampToValueAtTime(1200, now + 0.06);
 
-    gain.gain.setValueAtTime(0.3, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+    gain.gain.setValueAtTime(0.2 * this.sfxVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.01 * this.sfxVolume, now + 0.06);
 
     osc.connect(gain);
     if (this.sfxMasterGain) gain.connect(this.sfxMasterGain);
@@ -227,32 +316,113 @@ class SoundEngine {
     osc.stop(now + 0.06);
   }
 
-  // Play word success chime (uplifting harmonic chord)
-  playWordSuccess() {
-    if (!this.sfxEnabled || !this.audioCtx) return;
+  playShuffleSound() {
+    this.playSlice();
+  }
+
+  // Kid-Friendly Correct / Word Success Sound (Sparkly C5, E5, G5, C6 + Sparkle chime)
+  playCorrect() {
+    if (!this.sfxEnabled) return;
     this.ensureContextRunning();
+    if (!this.audioCtx) return;
 
-    const now = this.audioCtx.currentTime;
-    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6 (Major chord)
-
-    notes.forEach((freq, idx) => {
+    // Harmonic Major Arpeggio + High Sparkles
+    const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+    notes.forEach((freq, index) => {
       const osc = this.audioCtx.createOscillator();
       const gain = this.audioCtx.createGain();
-      const startTime = now + (idx * 0.07);
+      osc.type = index === 4 ? 'sine' : 'triangle';
+      osc.frequency.value = freq;
 
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, startTime);
-
-      gain.gain.setValueAtTime(0.2, startTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
+      const startTime = this.audioCtx.currentTime + index * 0.06;
+      gain.gain.setValueAtTime(0.24 * this.sfxVolume, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.001 * this.sfxVolume, startTime + 0.28);
 
       osc.connect(gain);
       if (this.sfxMasterGain) gain.connect(this.sfxMasterGain);
-    else gain.connect(this.audioCtx.destination);
+      else gain.connect(this.audioCtx.destination);
 
       osc.start(startTime);
-      osc.stop(startTime + 0.45);
+      osc.stop(startTime + 0.28);
     });
+  }
+
+  // Backward-compatible alias for word success
+  playWordSuccess() {
+    this.playCorrect();
+  }
+
+  playSuccess() {
+    this.playCorrect();
+  }
+
+  // Kid-Friendly Wrong / Error Sound (240Hz down to 160Hz)
+  playWrong() {
+    if (!this.sfxEnabled) return;
+    this.ensureContextRunning();
+    if (!this.audioCtx) return;
+
+    const osc = this.audioCtx.createOscillator();
+    const gain = this.audioCtx.createGain();
+    const now = this.audioCtx.currentTime;
+
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(240, now);
+    osc.frequency.linearRampToValueAtTime(160, now + 0.22);
+
+    gain.gain.setValueAtTime(0.18 * this.sfxVolume, now);
+    gain.gain.exponentialRampToValueAtTime(0.01 * this.sfxVolume, now + 0.22);
+
+    osc.connect(gain);
+    if (this.sfxMasterGain) gain.connect(this.sfxMasterGain);
+    else gain.connect(this.audioCtx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.22);
+  }
+
+  // Backward-compatible alias for error sound
+  playErrorSound() {
+    this.playWrong();
+  }
+
+  // Kid-Friendly Fanfare (Melodic Victory Chime)
+  playFanfare() {
+    if (!this.sfxEnabled) return;
+    this.ensureContextRunning();
+    if (!this.audioCtx) return;
+
+    const melody = [
+      { f: 523.25, t: 0.0, d: 0.12 }, // C5
+      { f: 659.25, t: 0.12, d: 0.12 }, // E5
+      { f: 783.99, t: 0.24, d: 0.12 }, // G5
+      { f: 1046.50, t: 0.36, d: 0.3 }, // C6
+      { f: 880.00, t: 0.52, d: 0.15 }, // A5
+      { f: 1046.50, t: 0.70, d: 0.45 } // C6
+    ];
+
+    melody.forEach(n => {
+      const osc = this.audioCtx.createOscillator();
+      const gain = this.audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.value = n.f;
+
+      const st = this.audioCtx.currentTime + n.t;
+      gain.gain.setValueAtTime(0.25 * this.sfxVolume, st);
+      gain.gain.exponentialRampToValueAtTime(0.001 * this.sfxVolume, st + n.d);
+
+      osc.connect(gain);
+      if (this.sfxMasterGain) gain.connect(this.sfxMasterGain);
+      else gain.connect(this.audioCtx.destination);
+
+      osc.start(st);
+      osc.stop(st + n.d);
+    });
+  }
+
+  // Backward-compatible alias for victory fanfare
+  playVictoryFanfare() {
+    this.playFanfare();
   }
 
   // Play bonus point sound (sparkling high pitch)
@@ -271,75 +441,15 @@ class SoundEngine {
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, startTime);
 
-      gain.gain.setValueAtTime(0.25, startTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.25);
+      gain.gain.setValueAtTime(0.25 * this.sfxVolume, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.001 * this.sfxVolume, startTime + 0.25);
 
       osc.connect(gain);
       if (this.sfxMasterGain) gain.connect(this.sfxMasterGain);
-    else gain.connect(this.audioCtx.destination);
+      else gain.connect(this.audioCtx.destination);
 
       osc.start(startTime);
       osc.stop(startTime + 0.3);
-    });
-  }
-
-  // Play error boop sound (gentle low pitch reminder)
-  playErrorSound() {
-    if (!this.sfxEnabled || !this.audioCtx) return;
-    this.ensureContextRunning();
-
-    const osc = this.audioCtx.createOscillator();
-    const gain = this.audioCtx.createGain();
-    const now = this.audioCtx.currentTime;
-
-    osc.type = 'sawtooth';
-    osc.frequency.setValueAtTime(220, now);
-    osc.frequency.exponentialRampToValueAtTime(110, now + 0.2);
-
-    gain.gain.setValueAtTime(0.2, now);
-    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-
-    osc.connect(gain);
-    gain.connect(this.audioCtx.destination);
-
-    osc.start(now);
-    osc.stop(now + 0.22);
-  }
-
-  // Play Victory / Quiz Complete Fanfare
-  playVictoryFanfare() {
-    if (!this.sfxEnabled || !this.audioCtx) return;
-    this.ensureContextRunning();
-
-    const now = this.audioCtx.currentTime;
-    const melody = [
-      { note: 523.25, duration: 0.15 }, // C5
-      { note: 523.25, duration: 0.15 }, // C5
-      { note: 523.25, duration: 0.15 }, // C5
-      { note: 659.25, duration: 0.4 },  // E5
-      { note: 587.33, duration: 0.2 },  // D5
-      { note: 783.99, duration: 0.6 }   // G5
-    ];
-
-    let timeOffset = 0;
-    melody.forEach((item) => {
-      const osc = this.audioCtx.createOscillator();
-      const gain = this.audioCtx.createGain();
-      const startTime = now + timeOffset;
-
-      osc.type = 'triangle';
-      osc.frequency.setValueAtTime(item.note, startTime);
-
-      gain.gain.setValueAtTime(0.25, startTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, startTime + item.duration);
-
-      osc.connect(gain);
-      gain.connect(this.audioCtx.destination);
-
-      osc.start(startTime);
-      osc.stop(startTime + item.duration + 0.05);
-
-      timeOffset += item.duration;
     });
   }
 
@@ -367,5 +477,6 @@ class SoundEngine {
   }
 }
 
-// Global Sound Instance
+// Global Sound Instance & Aliases
 window.soundEngine = new SoundEngine();
+window.soundManager = window.soundEngine;
